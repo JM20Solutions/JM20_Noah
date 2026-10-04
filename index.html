@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title data-i18n="metaTitle">Noah — Recepcionista de IA que Gestiona tus Reservas</title>
+<meta name="description" data-i18n-attr="content" data-i18n="metaDesc" content="Noah contesta el teléfono de tu negocio 24/7, consulta tu calendario real, y reserva, cambia o cancela citas."/>
+<meta name="theme-color" content="#1d1d1f"/>
+<meta name="author" content="JM20 AI Solutions"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="JM20 AI Solutions"/>
+<meta property="og:title" content="Noah by JM20 AI Solutions — Recepcionista de IA que Gestiona tus Reservas"/>
+<meta property="og:description" content="Noah, de JM20 AI Solutions, contesta el teléfono de tu negocio 24/7 y reserva, cambia o cancela citas en tu calendario real."/>
+<meta property="og:image" content="og-image.png"/><!-- NOTE: replace with the full URL, e.g. https://yourdomain.com/og-image.png -->
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" type="image/png" href="jm20-logo.png"/>
+
+<style>
+:root{
+  --bg:#1d1d1f;
+  --surface:#27272a;
+  --border:rgba(255,255,255,0.09);
+  --border-soft:rgba(255,255,255,0.07);
+  --accent:#2997ff;
+  --accent-soft:rgba(41,151,255,0.1);
+  --accent-line:rgba(41,151,255,0.25);
+  --purple:rgba(167,139,250,0.18);
+  --text:#ffffff;
+  --muted:#a0a0a0;
+  --muted-2:rgba(255,255,255,0.65);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"SF Pro Display",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:"SF Pro Text",system-ui,-apple-system,sans-serif}
+img{max-width:100%;display:block}
+::selection{background:rgba(41,151,255,0.3);color:#fff}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(29,29,31,0.75);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-soft)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0.9rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"SF Pro Display",sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.logo-by{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:400;color:var(--muted);font-family:"SF Pro Text",sans-serif;letter-spacing:0;padding-left:10px;margin-left:2px;border-left:1px solid var(--border)}
+.jm20-logo{height:12px;width:auto;display:inline-block}
+.call-by{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-top:3px}
+.call-by .jm20-logo{height:10px}
+.byline{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-bottom:1rem}
+.byline .jm20-logo{height:14px}
+.byline b{font-weight:600;color:var(--muted-2)}
+.footer-logo{height:20px;width:auto;margin:0 auto 1rem;opacity:.95}
+footer p+p{margin-top:.4rem;font-size:12px;color:rgba(255,255,255,.22)}
+@media (max-width:520px){.logo-by{display:none}}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-link{font-family:"SF Pro Text",sans-serif;font-size:14px;color:var(--muted-2);transition:color .15s}
+.nav-link:hover{color:#fff}
+@media (max-width:760px){.nav-links a.nav-link{display:none}}
+.lang-toggle{display:flex;background:rgba(255,255,255,.06);border:1px solid var(--border-soft);border-radius:9999px;padding:3px;gap:2px}
+.lang-btn{padding:.3rem .65rem;border-radius:9999px;border:none;background:transparent;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer;font-family:"SF Pro Text",sans-serif;font-weight:600;transition:all .15s}
+.lang-btn.active{background:var(--accent);color:#fff}
+
+/* ---------- buttons ---------- */
+.btn-primary{background:var(--accent);color:#fff;padding:11px 22px;border-radius:9999px;font-size:16px;font-weight:400;letter-spacing:-0.02em;cursor:pointer;border:none;transition:opacity .18s, transform .18s;font-family:"SF Pro Text",sans-serif;display:inline-block}
+.btn-primary:hover{opacity:.88}
+.btn-primary:active{transform:scale(0.96)}
+.btn-ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:11px 22px;border-radius:9999px;font-size:16px;font-weight:400;cursor:pointer;transition:opacity .18s, transform .18s;font-family:"SF Pro Text",sans-serif;display:inline-block}
+.btn-ghost:hover{opacity:.8}
+.btn-ghost:active{transform:scale(0.96)}
+
+/* ---------- keyframes ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroGlow{0%,100%{transform:translateX(-50%) scale(1);opacity:.55}50%{transform:translateX(-50%) scale(1.2);opacity:1}}
+@keyframes heroGlow2{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.85;transform:scale(1.12)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes ring{0%,100%{transform:rotate(0)}10%{transform:rotate(-12deg)}20%{transform:rotate(10deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(6deg)}50%,100%{transform:rotate(0)}}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ---------- hero ---------- */
+.hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 1.25rem 4rem;position:relative;overflow:hidden;text-align:center}
+.glow-a{position:absolute;top:16%;left:50%;transform:translateX(-50%);width:760px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(41,151,255,.28) 0%,transparent 65%);pointer-events:none;animation:heroGlow 7s ease-in-out infinite}
+.glow-b{position:absolute;top:52%;left:26%;width:520px;height:360px;border-radius:50%;background:radial-gradient(circle,var(--purple) 0%,transparent 65%);pointer-events:none;animation:heroGlow2 9s ease-in-out infinite;animation-delay:-5s}
+.hero-inner{max-width:720px;position:relative;animation:fadeUp .9s ease both}
+.badge{display:inline-flex;align-items:center;gap:.45rem;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:9999px;padding:.35rem .85rem;margin-bottom:1.75rem;font-size:12px;color:var(--accent);font-family:"SF Pro Text",sans-serif}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.hero h1{font-size:clamp(1.9rem,5.5vw,3.1rem);font-weight:600;line-height:1.12;letter-spacing:-0.02em;margin-bottom:1.25rem}
+.hero p.lead{font-size:clamp(1rem,2.6vw,1.2rem);color:var(--muted-2);font-weight:400;line-height:1.55;max-width:540px;margin:0 auto 2.5rem}
+.hero-ctas{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem}
+
+/* phone mock as hero centerpiece */
+.phone{width:260px;height:530px;margin:0 auto;border-radius:40px;background:linear-gradient(180deg,#1d1d1f,#141416);border:1px solid var(--border);box-shadow:0 30px 80px rgba(0,0,0,.6);position:relative;padding:14px}
+.phone-screen{width:100%;height:100%;border-radius:28px;background:#000;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:2rem 1rem 1.5rem}
+.phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:20px;border-radius:12px;background:#141416;z-index:2}
+.call-label{font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;letter-spacing:.02em;margin-top:1.5rem}
+.call-avatar{width:88px;height:88px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;margin:1rem 0;animation:ring 3.2s ease-in-out infinite}
+.call-name{font-size:20px;font-weight:600;letter-spacing:-0.02em}
+.call-sub{font-size:13px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-top:2px}
+.waveform{display:flex;align-items:center;gap:3px;height:32px;margin:1.25rem 0}
+.waveform span{width:3px;border-radius:2px;background:var(--accent);animation:wave 1.1s ease-in-out infinite}
+@keyframes wave{0%,100%{height:6px}50%{height:28px}}
+.call-actions{display:flex;gap:1.5rem}
+.call-btn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
+.call-btn.end{background:#ff453a}
+.call-btn.mute{background:rgba(255,255,255,.08);color:#fff}
+
+/* stat grid */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:560px;width:100%;margin:0 auto;background:var(--border-soft);border-radius:18px;overflow:hidden}
+.stat-cell{padding:1.25rem .5rem;background:var(--surface);text-align:center}
+.stat-value{font-size:clamp(1.1rem,4vw,1.9rem);font-weight:600;color:var(--accent);letter-spacing:-0.02em}
+.stat-label{font-size:12px;color:var(--muted);margin-top:.25rem;font-family:"SF Pro Text",sans-serif}
+
+/* ---------- section shell ---------- */
+section.block{padding:6rem 2rem;border-top:1px solid var(--border-soft)}
+.bg-alt{background:var(--bg)}
+.section-head{text-align:center;max-width:640px;margin:0 auto 3rem}
+.eyebrow{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:-0.01em;font-family:"SF Pro Text",sans-serif}
+.section-head h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:600;letter-spacing:-0.02em;margin-top:.5rem}
+.section-head p{color:var(--muted);margin-top:.75rem;font-size:17px;font-family:"SF Pro Text",sans-serif;line-height:1.5}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-soft);border-radius:18px;overflow:hidden;max-width:1000px;margin:0 auto}
+.step{background:var(--surface);padding:2rem 1.5rem}
+.step-num{font-size:13px;color:var(--accent);font-family:"SF Pro Text",sans-serif;margin-bottom:.75rem}
+.step h3{font-size:17px;font-weight:600;margin-bottom:.5rem;letter-spacing:-0.01em}
+.step p{font-size:14px;color:var(--muted);font-family:"SF Pro Text",sans-serif;line-height:1.5}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+
+/* value cards */
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft);border-radius:18px;overflow:hidden;max-width:1000px;margin:0 auto}
+.value-card{background:var(--surface);padding:2rem}
+.value-card h3{font-size:17px;font-weight:600;margin-bottom:.6rem;letter-spacing:-0.01em}
+.value-card p{font-size:14px;color:var(--muted);font-family:"SF Pro Text",sans-serif;line-height:1.55}
+@media (max-width:760px){.value-grid{grid-template-columns:1fr}}
+
+/* demo section */
+.tab-row{display:flex;justify-content:center;margin-bottom:2.5rem}
+.tab-selector{display:flex;background:rgba(255,255,255,.05);border:1px solid var(--border-soft);border-radius:9999px;padding:4px;gap:2px}
+.tab-btn{padding:.55rem 1.2rem;border-radius:9999px;border:none;background:transparent;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;transition:all .2s;font-family:"SF Pro Text",sans-serif}
+.tab-btn.active{background:var(--accent);color:#fff}
+
+.demo-outer{display:flex;gap:2.5rem;align-items:center;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
+.demo-phone{width:240px;height:490px;border-radius:36px;background:linear-gradient(180deg,#1d1d1f,#141416);border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);padding:12px;flex-shrink:0}
+.demo-screen{width:100%;height:100%;border-radius:26px;background:#000;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;text-align:center}
+.demo-avatar{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
+.demo-name{font-size:16px;font-weight:600}
+.demo-status{font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-top:2px;display:flex;align-items:center;gap:5px}
+.demo-status .dot{width:5px;height:5px;border-radius:50%;background:#22c55e}
+.demo-wave{display:flex;align-items:center;gap:3px;height:26px;margin:1rem 0}
+.demo-wave span{width:3px;border-radius:2px;background:var(--accent);animation:wave 1.1s ease-in-out infinite;opacity:.4}
+.demo-wave.playing span{opacity:1}
+
+.demo-panel{width:min(420px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.demo-panel-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border-soft);background:rgba(255,255,255,.02)}
+.demo-panel-head h4{font-size:14px;font-weight:600}
+.demo-panel-head p{font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-top:2px}
+.transcript{padding:1.25rem;display:flex;flex-direction:column;gap:.6rem;max-height:260px;overflow-y:auto;position:relative;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.line{font-size:13px;line-height:1.5;font-family:"SF Pro Text",sans-serif;padding:.55rem .8rem;border-radius:12px;max-width:88%}
+.line.caller{align-self:flex-start;background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);border-radius:12px 12px 12px 3px}
+.line.agent{align-self:flex-end;background:var(--accent-soft);color:#fff;border:1px solid var(--accent-line);border-radius:12px 12px 3px 12px}
+
+/* ---- transcript sync effects ---- */
+@keyframes lineInAgent{from{opacity:0;transform:translateX(18px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes lineInCaller{from{opacity:0;transform:translateX(-18px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes lineGlow{0%,100%{box-shadow:0 0 0 0 rgba(41,151,255,0)}50%{box-shadow:0 0 16px 1px rgba(41,151,255,.35)}}
+.line{transition:opacity .35s, background .35s, border-color .35s}
+.transcript.sync .line{display:none}
+.transcript.sync .line.shown{display:block}
+.transcript.sync .line.agent.shown{animation:lineInAgent .45s cubic-bezier(.22,1,.36,1) both}
+.transcript.sync .line.caller.shown{animation:lineInCaller .45s cubic-bezier(.22,1,.36,1) both}
+.transcript.sync .line.past{opacity:.5}
+.transcript .line.active{opacity:1;background:rgba(41,151,255,.18);border:1px solid var(--accent);color:#fff}
+.transcript .line.caller.active{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4)}
+.transcript.sync .line.agent.active{animation:lineInAgent .45s cubic-bezier(.22,1,.36,1) both, lineGlow 1.6s ease-in-out .45s infinite}
+.demo-wave:not(.playing) span{animation-play-state:paused;height:6px}
+.audio-row{padding:.85rem 1.25rem;border-top:1px solid var(--border-soft);display:flex;align-items:center;gap:.75rem}
+.audio-row span{font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;white-space:nowrap}
+.audio-row audio{flex:1;height:28px;accent-color:var(--accent)}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-soft);border-radius:18px;overflow:hidden;max-width:1240px;margin:0 auto}
+.price-card{background:var(--surface);padding:2.25rem 1.75rem;display:flex;flex-direction:column;position:relative}
+.price-card.featured{background:#303035}
+.price-tag{position:absolute;top:1.1rem;right:1.1rem;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent);font-size:11px;font-weight:600;padding:.25rem .6rem;border-radius:9999px;font-family:"SF Pro Text",sans-serif}
+.price-name{font-size:14px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-bottom:.6rem}
+.price-amount{font-size:2.1rem;font-weight:600;letter-spacing:-0.02em;line-height:1}
+.price-amount span{font-size:15px;color:var(--muted);font-weight:400}
+.price-sub{font-size:12px;color:var(--muted);font-family:"SF Pro Text",sans-serif;margin-top:.4rem;min-height:2.4em}
+.price-features{list-style:none;margin:1.5rem 0 1.75rem;display:flex;flex-direction:column;gap:.65rem;flex:1}
+.price-features li{font-size:13.5px;color:var(--muted-2);font-family:"SF Pro Text",sans-serif;display:flex;align-items:flex-start;gap:.5rem;line-height:1.4}
+.price-features li svg{flex-shrink:0;margin-top:2px}
+.price-cta{text-align:center;width:100%}
+.price-note{max-width:720px;margin:2.25rem auto 0;text-align:center;font-size:12.5px;color:rgba(255,255,255,.35);font-family:"SF Pro Text",sans-serif;line-height:1.6}
+@media (max-width:980px){.price-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.price-grid{grid-template-columns:1fr}}
+
+/* faq */
+.faq-list{display:flex;flex-direction:column;gap:1px;background:var(--border-soft);border-radius:18px;overflow:hidden;max-width:720px;margin:0 auto}
+.faq-item{background:var(--surface)}
+.faq-q{width:100%;padding:1.2rem 1.4rem;display:flex;justify-content:space-between;align-items:center;background:none;border:none;cursor:pointer;text-align:left;gap:1rem}
+.faq-q span.txt{font-size:16px;font-weight:600;color:#fff;font-family:"SF Pro Text",sans-serif}
+.faq-plus{color:rgba(255,255,255,.4);font-size:1.2rem;font-weight:300;transition:transform .2s}
+.faq-item.open .faq-plus{color:var(--accent);transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1)}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{padding:0 1.4rem 1.2rem;color:var(--muted);font-size:15px;font-family:"SF Pro Text",sans-serif;line-height:1.55;border-top:1px solid var(--border-soft);padding-top:1rem}
+
+/* cta band */
+.cta-band{text-align:center;padding:6rem 2rem}
+.cta-band h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:600;letter-spacing:-0.02em;margin-bottom:1rem}
+.cta-band p{color:var(--muted);font-size:17px;font-family:"SF Pro Text",sans-serif;margin-bottom:2rem}
+.contact-row{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2.25rem}
+.contact-item{display:flex;align-items:center;gap:.6rem;font-size:15px;color:var(--muted-2);font-family:"SF Pro Text",sans-serif}
+.contact-item svg{flex-shrink:0}
+.contact-item a{color:var(--muted-2);transition:color .15s}
+.contact-item a:hover{color:var(--accent)}
+
+footer{padding:2.5rem 2rem;border-top:1px solid var(--border-soft);text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,.3);font-family:"SF Pro Text",sans-serif}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-dot"></span>Noah<span class="logo-by"><span data-i18n="by">by</span><img class="jm20-logo" src="jm20-logo.png" alt="JM20"/></span></div>
+    <div class="nav-links">
+      <a class="nav-link" href="#how" data-i18n="navHow">Cómo funciona</a>
+      <a class="nav-link" href="#demo" data-i18n="navDemo">Demo</a>
+      <a class="nav-link" href="#pricing" data-i18n="navPricing">Precios</a>
+      <a class="nav-link" href="#faq" data-i18n="navFaq">Preguntas</a>
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a class="btn-primary" href="#cta" style="padding:8px 18px;font-size:14px;" data-i18n="navCta">Contáctanos</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+  <div class="hero-inner">
+    <div class="byline"><span data-i18n="byline">Un producto de</span><img class="jm20-logo" src="jm20-logo.png" alt="JM20"/><b>AI Solutions</b></div><br/>
+    <div class="badge"><span class="badge-dot"></span><span data-i18n="heroBadge">CONTESTA CADA LLAMADA · RESERVA EN TU CALENDARIO REAL · 24/7</span></div>
+    <h1 data-i18n="heroH1"> Cada llamada que no contestas, la contesta tu competencia. </h1>
+    <p class="lead" data-i18n="heroLead"> Noah es tu recepcionista de IA: contesta cada llamada de tu negocio, esté abierto o cerrado, entiende lo que el cliente necesita, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento — en una conversación tan natural que nadie diría que habla con una IA.
+
+Cada llamada que no contestas no es solo una llamada. Es un cliente que se va a la competencia.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#cta" data-i18n="heroCta1">Contáctanos</a>
+      <a class="btn-ghost" href="#demo" data-i18n="heroCta2">Escucha una llamada real ↓</a>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="call-label" data-i18n="incomingCall">Llamada entrante</div>
+        <div class="call-avatar">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="call-name">Noah</div>
+        <div class="call-by"><span data-i18n="by">by</span><img class="jm20-logo" src="jm20-logo.png" alt="JM20"/></div>
+        <div class="call-sub" data-i18n="callSub">Recepcionista de IA</div>
+        <div class="waveform">
+          <span style="animation-delay:0s"></span><span style="animation-delay:.1s"></span><span style="animation-delay:.2s"></span><span style="animation-delay:.3s"></span><span style="animation-delay:.15s"></span><span style="animation-delay:.25s"></span><span style="animation-delay:.05s"></span>
+        </div>
+        <div class="call-actions">
+          <button class="call-btn mute">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+          </button>
+          <button class="call-btn end">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 9c-1.6 0-3.15.25-4.6.72a1 1 0 0 0-.5 1.5l1.3 2a1 1 0 0 0 1.05.45c.85-.2 1.75-.32 2.75-.32s1.9.12 2.75.32a1 1 0 0 0 1.05-.45l1.3-2a1 1 0 0 0-.5-1.5A15 15 0 0 0 12 9z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid" style="margin-top:3.5rem;">
+      <div class="stat-cell"><div class="stat-value">24/7</div><div class="stat-label" data-i18n="stat1">Siempre contesta</div></div>
+      <div class="stat-cell"><div class="stat-value">&lt;2s</div><div class="stat-label" data-i18n="stat2">Respuesta media</div></div>
+      <div class="stat-cell"><div class="stat-value">0</div><div class="stat-label" data-i18n="stat3">Llamadas perdidas</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="howEyebrow">CÓMO FUNCIONA</span>
+      <h2 data-i18n="howH2">Cuatro pasos. Sin ninguna app que tus clientes tengan que descargar.</h2>
+      <p data-i18n="howSub">Noah se conecta al número que ya tienes y al calendario que ya usas.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3 data-i18n="step1h">El cliente llama</h3><p data-i18n="step1p">Tu número de siempre — para ellos no cambia nada.</p></div>
+      <div class="step"><div class="step-num">02</div><h3 data-i18n="step2h">Noah contesta</h3><p data-i18n="step2p">Una conversación natural, no un menú de teclas. Entiende lo que necesitan.</p></div>
+      <div class="step"><div class="step-num">03</div><h3 data-i18n="step3h">Consulta el calendario</h3><p data-i18n="step3p">Disponibilidad real, no una suposición — sincronizada con tu sistema de reservas.</p></div>
+      <div class="step"><div class="step-num">04</div><h3 data-i18n="step4h">Reserva al instante</h3><p data-i18n="step4p">Confirmada, cambiada o cancelada — actualizado en todas partes al momento.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block bg-alt reveal" id="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="demoEyebrow">ESCÚCHALO TÚ MISMO</span>
+      <h2 data-i18n="demoH2">Interacciones reales, conexiones auténticas y verdadero valor humano</h2>
+      <p data-i18n="demoSub">Tres momentos reales — reservar una cita nueva, cambiarla y cancelarla.</p>
+    </div>
+
+    <div class="tab-row">
+      <div class="tab-selector" id="tabSelector">
+        <button class="tab-btn active" data-tab="booking" data-i18n="tabBooking">Agendar</button>
+        <button class="tab-btn" data-tab="reschedule" data-i18n="tabReschedule">Cambiar</button>
+        <button class="tab-btn" data-tab="cancel" data-i18n="tabCancel">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="demo-outer">
+      <div class="demo-phone">
+        <div class="demo-screen">
+          <div class="demo-avatar">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="demo-name">Noah</div>
+          <div class="call-by"><span data-i18n="by">by</span><img class="jm20-logo" src="jm20-logo.png" alt="JM20"/></div>
+          <div class="demo-status"><span class="dot"></span><span data-i18n="onCall">En llamada</span> · <span id="demoDuration">00:00</span></div>
+          <div class="demo-wave" id="demoWave">
+            <span style="animation-delay:0s"></span><span style="animation-delay:.1s"></span><span style="animation-delay:.2s"></span><span style="animation-delay:.3s"></span><span style="animation-delay:.15s"></span><span style="animation-delay:.25s"></span><span style="animation-delay:.05s"></span><span style="animation-delay:.18s"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel">
+        <div class="demo-panel-head">
+          <h4 id="panelTitle">Reserva nueva</h4>
+          <p id="panelSub">Corte de cabello · Martes, 17:00</p>
+        </div>
+        <div class="transcript" id="transcript"></div>
+        <div class="audio-row">
+          <span data-i18n="listen">Escuchar:</span>
+          <audio id="demoAudio" controls>
+            <source src="" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="valueEyebrow">POR QUÉ FUNCIONA DE VERDAD</span>
+      <h2 data-i18n="valueH2">Hecho para negocios donde cada llamada cuenta </h2>
+    </div>
+    <div class="value-grid">
+      <div class="value-card"><h3 data-i18n="value1h">No vuelvas a perder una llamada</h3><p data-i18n="value1p">Cada llamada se contesta, aunque sea las nueve de la noche de un domingo o a mitad de un corte un sábado a tope.</p></div>
+      <div class="value-card"><h3 data-i18n="value2h">Reserva directo en tu calendario</h3><p data-i18n="value2p">Sin un sistema aparte que consultar. Lo que Noah reserva aparece justo donde ya miras.</p></div>
+      <div class="value-card"><h3 data-i18n="value3h">Suena como una persona, no un menú</h3><p data-i18n="value3p">Los clientes hablan con normalidad — nada de "pulse uno para reservas." Noah entiende la conversación.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="priceEyebrow">PRECIOS</span>
+      <h2 data-i18n="priceH2">Elige cómo prefieres pagarlo</h2>
+      <p data-i18n="priceSub">Mismo Noah, mismo servicio — la diferencia es cuánto te comprometes y cuánto ahorras.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name" data-i18n="plan0Name">Pay As You Go</div>
+        <div class="price-amount">0€<span data-i18n="perMonth"> /mes</span></div>
+        <div class="price-sub" data-i18n="plan0Sub">180€ de configuración (pago único) · sin cuota mensual</div>
+        <ul class="price-features">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOveragePayg">0,40€ por minuto (mínimo 1 minuto)</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featPaygUse">Paga solo lo que uses</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featCancel">Cancela cuando quieras</span></li>
+        </ul>
+        <a class="btn-ghost price-cta" href="#cta" data-i18n="planCta">Lo quiero</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name" data-i18n="plan1Name">Starter</div>
+        <div class="price-amount">49€<span data-i18n="perMonth"> /mes</span></div>
+        <div class="price-sub" data-i18n="plan1Sub">+ 180€ de instalación (pago único) · sin permanencia</div>
+        <ul class="price-features">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featMinStarter">150 minutos al mes incluidos</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOverage">0,35€ por minuto adicional</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featCancel">Cancela cuando quieras</span></li>
+        </ul>
+        <a class="btn-ghost price-cta" href="#cta" data-i18n="planCta">Lo quiero</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-tag" data-i18n="tagPopular">COSTO DE INSTALACION FINANCIADO</div>
+        <div class="price-name" data-i18n="plan2Name">Pro</div>
+        <div class="price-amount">79€<span data-i18n="perMonth"> /mes</span></div>
+        <div class="price-sub" data-i18n="plan2Sub">Configuración fraccionada en 6 meses — después 49€/mes · compromiso de 6 meses</div>
+        <ul class="price-features">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featMinPro">200 minutos al mes incluidos</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOverage">0,35€ por minuto adicional</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featNoUpfront">Sin instalación por adelantado</span></li>
+        </ul>
+        <a class="btn-primary price-cta" href="#cta" data-i18n="planCta">Lo quiero</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tag" data-i18n="tagSave">AHORRA MÁS</div>
+        <div class="price-name" data-i18n="plan3Name">Anual · pago único</div>
+        <div class="price-amount">650€<span data-i18n="perYear"> /año</span></div>
+        <div class="price-sub" data-i18n="plan3Sub">Instalación incluida · equivale a 54€/mes · compromiso de 12 meses</div>
+        <ul class="price-features">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featMinFull">300 minutos al mes incluidos</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOverage">0,35€ por minuto adicional</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featBestPrice">El precio más bajo por minuto</span></li>
+        </ul>
+        <a class="btn-ghost price-cta" href="#cta" data-i18n="planCta">Lo quiero</a>
+      </div>
+    </div>
+
+    <p class="price-note" data-i18n="priceNote">Precios + IVA. Pro tiene un compromiso de 6 meses y Anual de 12 meses; la cancelación anticipada conlleva el pago del saldo pendiente de la configuración. Starter y Pay As You Go no tienen permanencia.</p>
+  </div>
+</section>
+
+<section class="block bg-alt reveal" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="faqEyebrow">PREGUNTAS</span>
+      <h2 data-i18n="faqH2">Bueno saberlo</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q"><span class="txt" data-i18n="faqQ1">¿Necesito un número de teléfono nuevo?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a"><p data-i18n="faqA1">No. Noah se conecta al número que ya das a tus clientes — para ellos no cambia nada.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="txt" data-i18n="faqQ2">¿Qué pasa si Noah no puede ayudar con algo?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a"><p data-i18n="faqA2">Se mantiene en lo suyo — reservar, cambiar y cancelar citas — y avisa al cliente cuando algo queda fuera de eso.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="txt" data-i18n="faqQ3">¿Con qué calendarios funciona?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a"><p data-i18n="faqA3">Está construido sobre Cal.com, así que la disponibilidad y las reservas se mantienen sincronizadas con tu calendario real en tiempo real.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="txt" data-i18n="faqQ4">¿Puede gestionar más de un local o servicio?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a"><p data-i18n="faqA4">Sí — cada línea de negocio se configura con sus propios servicios, disponibilidad y calendario.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band reveal" id="cta">
+  <h2 data-i18n="ctaH2">Deja de perder reservas</h2>
+  <p data-i18n="ctaP">15 minutos para enseñarte exactamente cómo funcionaría en tu negocio.</p>
+  <a class="btn-primary" href="#cta" style="font-size:17px;padding:13px 28px;" data-i18n="ctaBtn">Contáctanos</a>
+
+  <div class="contact-row">
+    <div class="contact-item">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <a href="tel:+34600000000"><!-- REPLACE: real phone number -->+34 600 000 000</a>
+    </div>
+    <div class="contact-item">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <a href="mailto:hola@Noah.ai"><!-- REPLACE: real email -->hola@Noah.ai</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img class="footer-logo" src="jm20-logo.png" alt="JM20 AI Solutions"/>
+  <p data-i18n="footerText">Noah es un producto de JM20 AI Solutions · Reservas por voz, bien hechas.</p>
+  <p data-i18n="footerCopy">© 2026 JM20 AI Solutions. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+/* ---------- scroll reveal ---------- */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, {threshold:.08, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+/* ---------- faq accordion ---------- */
+document.querySelectorAll('.faq-item').forEach(function(item){
+  item.querySelector('.faq-q').addEventListener('click', function(){
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+/* ---------- translations ---------- */
+var TR = {
+  es: {
+    metaTitle: "Noah by JM20 AI Solutions — Recepcionista de IA que Gestiona tus Reservas", by: "by", byline: "Un producto de",
+    metaDesc: "Noah contesta el teléfono de tu negocio 24/7, consulta tu calendario real, y reserva, cambia o cancela citas.",
+    navHow: "Cómo funciona", navDemo: "Demo", navPricing: "Precios", navFaq: "Preguntas", navCta: "Contáctanos",
+    heroBadge: "CONTESTA CADA LLAMADA · RESERVA EN TU CALENDARIO REAL · 24/7",
+    heroH1: "Cada llamada que no contestas, la contesta tu competencia.",
+    heroLead: "Noah es tu recepcionista de IA: contesta cada llamada de tu negocio, esté abierto o cerrado, entiende lo que el cliente necesita, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento — en una conversación tan natural que nadie diría que habla con una IA. Cada llamada que no contestas no es solo una llamada. Es un cliente que se va a la competencia.",
+    heroCta1: "Contáctanos", heroCta2: "Escucha una llamada real ↓",
+    incomingCall: "Llamada entrante", callSub: "Recepcionista de IA",
+    stat1: "Siempre contesta", stat2: "Respuesta media", stat3: "Llamadas perdidas",
+    howEyebrow: "CÓMO FUNCIONA",
+    howH2: "Cuatro pasos. Sin ninguna app que tus clientes tengan que descargar.",
+    howSub: "Noah se conecta al número que ya tienes y al calendario que ya usas.",
+    step1h: "El cliente llama", step1p: "Tu número de siempre — para ellos no cambia nada.",
+    step2h: "Noah contesta", step2p: "Una conversación natural, no un menú de teclas. Entiende lo que necesitan.",
+    step3h: "Consulta el calendario", step3p: "Disponibilidad real, no una suposición — sincronizada con tu sistema de reservas.",
+    step4h: "Reserva al instante", step4p: "Confirmada, cambiada o cancelada — actualizado en todas partes al momento.",
+    demoEyebrow: "ESCÚCHALO TÚ MISMO",
+    demoH2: "Interacciones reales, conexiones auténticas y verdadero valor humano",
+    demoSub: "Tres momentos reales — reservar una cita nueva, cambiarla y cancelarla.",
+    tabBooking: "Agendar", tabReschedule: "Cambiar", tabCancel: "Cancelar",
+    onCall: "En llamada", listen: "Escuchar:",
+    valueEyebrow: "POR QUÉ FUNCIONA DE VERDAD",
+    valueH2: "Hecho para negocios donde cada llamada cuenta",
+    value1h: "No vuelvas a perder una llamada",
+    value1p: "Cada llamada se contesta, aunque sea las nueve de la noche de un domingo o a mitad de un corte un sábado a tope.",
+    value2h: "Reserva directo en tu calendario",
+    value2p: "Sin un sistema aparte que consultar. Lo que Noah reserva aparece justo donde ya miras.",
+    value3h: "Suena como una persona, no un menú",
+    value3p: "Los clientes hablan con normalidad — nada de \"pulse uno para reservas.\" Noah entiende la conversación.",
+    priceEyebrow: "PRECIOS", priceH2: "Elige cómo prefieres pagarlo",
+    priceSub: "Mismo Noah, mismo servicio — la diferencia es cuánto te comprometes y cuánto ahorras.",
+    plan0Name: "Pay As You Go", plan0Sub: "180€ de configuración (pago único) · sin cuota mensual",
+    plan1Name: "Starter", plan1Sub: "+ 180€ de instalación (pago único) · sin permanencia",
+    plan2Name: "Pro", plan2Sub: "Configuración fraccionada en 6 meses — después 49€/mes · compromiso de 6 meses",
+    plan3Name: "Anual · pago único", plan3Sub: "Instalación incluida · equivale a 54€/mes · compromiso de 12 meses",
+    perMonth: " /mes", perYear: " /año",
+    tagPopular: "INSTALACION FINANCIADA", tagSave: "",
+    featMinStarter: "150 minutos al mes incluidos", featMinPro: "200 minutos al mes incluidos", featMinFull: "300 minutos al mes incluidos",
+    featOverage: "0,35€ por minuto adicional", featOveragePayg: "0,40€ por minuto (mínimo 1 minuto)", featPaygUse: "Paga solo lo que uses",
+    featCancel: "Cancela cuando quieras", featNoUpfront: "Sin instalación por adelantado",
+    featBestPrice: "El precio más bajo por minuto", planCta: "Lo quiero",
+    priceNote: "Precios + IVA. Pro tiene un compromiso de 6 meses y Anual de 12 meses; la cancelación anticipada conlleva el pago del saldo pendiente de la configuración. Starter y Pay As You Go no tienen permanencia.",
+    faqEyebrow: "PREGUNTAS", faqH2: "Bueno saberlo",
+    faqQ1: "¿Necesito un número de teléfono nuevo?",
+    faqA1: "No. Noah se conecta al número que ya das a tus clientes — para ellos no cambia nada.",
+    faqQ2: "¿Qué pasa si Noah no puede ayudar con algo?",
+    faqA2: "Se mantiene en lo suyo — reservar, cambiar y cancelar citas — y avisa al cliente cuando algo queda fuera de eso.",
+    faqQ3: "¿Con qué calendarios funciona?",
+    faqA3: "Está construido sobre Cal.com, así que la disponibilidad y las reservas se mantienen sincronizadas con tu calendario real en tiempo real.",
+    faqQ4: "¿Puede gestionar más de un local o servicio?",
+    faqA4: "Sí — cada línea de negocio se configura con sus propios servicios, disponibilidad y calendario.",
+    ctaH2: "Deja de perder reservas",
+    ctaP: "15 minutos para enseñarte exactamente cómo funcionaría en tu negocio.",
+    ctaBtn: "Contáctanos",
+    footerText: "Noah es un producto de JM20 AI Solutions · Reservas por voz, bien hechas.",
+    footerCopy: "© 2026 JM20 AI Solutions. Todos los derechos reservados."
+  },
+  en: {
+    metaTitle: "Noah by JM20 AI Solutions — AI Receptionist That Handles Your Bookings", by: "by", byline: "A product of",
+    metaDesc: "Noah answers your business phone 24/7, checks your real calendar, and books, reschedules, or cancels appointments.",
+    navHow: "How it works", navDemo: "Demo", navPricing: "Pricing", navFaq: "FAQ", navCta: "Contact us",
+    heroBadge: "ANSWERS EVERY CALL · BOOKS TO YOUR REAL CALENDAR · 24/7",
+    heroH1: "Every call you don't answer, your competitor does ",
+    heroLead: "Noah is your AI receptionist: it answers every call, open or closed, day or night, understands what the caller needs, checks your real availability, and books, reschedules, or cancels the appointment on the spot — in a conversation so natural, no one would guess it's AI. Every call you miss isn't just a call. It's a customer walking straight to your competitor.",
+    heroCta1: "Contact us", heroCta2: "Listen to a real call ↓",
+    incomingCall: "Incoming call", callSub: "AI Receptionist",
+    stat1: "Always answers", stat2: "Avg. response", stat3: "Missed calls",
+    howEyebrow: "HOW IT WORKS",
+    howH2: "Four steps. No app for your customers to download.",
+    howSub: "Noah plugs into the phone number you already have and the calendar you already use.",
+    step1h: "Customer calls", step1p: "Your existing business number — nothing changes for them.",
+    step2h: "Noah answers", step2p: "A natural conversation, not a phone tree. Understands what they need.",
+    step3h: "Checks your calendar", step3p: "Real-time availability, not a guess — synced with your actual booking system.",
+    step4h: "Books it, instantly", step4p: "Confirmed, rescheduled, or cancelled — updated everywhere immediately.",
+    demoEyebrow: "LISTEN FOR YOURSELF",
+    demoH2: "Real interactions, authentic connections, true human value",
+    demoSub: "Three real moments — booking a new appointment, changing one, and cancelling one.",
+    tabBooking: "Book", tabReschedule: "Reschedule", tabCancel: "Cancel",
+    onCall: "On call", listen: "Listen:",
+    valueEyebrow: "WHY IT ACTUALLY WORKS",
+    valueH2: "Built for businesses where every call counts",
+    value1h: "Never miss a call again",
+    value1p: "Every call gets answered, even at 9pm on a Sunday or mid-haircut on a busy Saturday.",
+    value2h: "Books straight to your calendar",
+    value2p: "No separate system to check. What Noah books shows up exactly where you already look.",
+    value3h: "Sounds like a person, not a menu",
+    value3p: "Customers talk normally — no \"press 1 for bookings.\" Noah understands the conversation.",
+    priceEyebrow: "PRICING", priceH2: "Choose how you'd rather pay",
+    priceSub: "Same Noah, same service — the difference is how much you commit and how much you save.",
+    plan0Name: "Pay As You Go", plan0Sub: "€180 setup (one-time) · no monthly fee",
+    plan1Name: "Starter", plan1Sub: "+ €180 setup (one-time) · no commitment",
+    plan2Name: "Pro", plan2Sub: "Setup cost split over 6 months — then €49/mo · 6-month commitment",
+    plan3Name: "Annual · paid upfront", plan3Sub: "Setup included · works out to €54/mo · 12-month commitment",
+    perMonth: " /mo", perYear: " /yr",
+    tagPopular: "No setup upfront", 
+    featMinStarter: "150 minutes included per month", featMinPro: "200 minutes included per month", featMinFull: "300 minutes included per month",
+    featOverage: "€0.35 per extra minute", featOveragePayg: "€0.40 per minute (1-minute minimum)", featPaygUse: "Pay only for what you use",
+    featCancel: "Cancel anytime", featNoUpfront: "No setup paid upfront",
+    featBestPrice: "The lowest price per minute", planCta: "I want this",
+    priceNote: "Prices + VAT. Pro carries a 6-month commitment and Annual a 12-month commitment; early cancellation requires paying the remaining setup balance. Starter and Pay As You Go have no commitment.",
+    faqEyebrow: "QUESTIONS", faqH2: "Good to know",
+    faqQ1: "Do I need a new phone number?",
+    faqA1: "No. Noah connects to the number you already give customers — nothing changes for them.",
+    faqQ2: "What if Noah can't help with something?",
+    faqA2: "It stays in its lane — booking, rescheduling, and cancelling appointments — and lets the caller know when something's outside that.",
+    faqQ3: "Which calendar systems does it work with?",
+    faqA3: "Built on Cal.com under the hood, so availability and bookings stay in sync with your real calendar in real time.",
+    faqQ4: "Can it handle more than one location or service?",
+    faqA4: "Yes — each business line is set up with its own services, availability, and calendar.",
+    ctaH2: "Stop losing bookings to a ringing phone.",
+    ctaP: "15 minutes to show you exactly how it'd work for your business.",
+    ctaBtn: "Contact us",
+    footerText: "Noah is a product of JM20 AI Solutions · Voice bookings, done right.",
+    footerCopy: "© 2026 JM20 AI Solutions. All rights reserved."
+  }
+};
+
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if(TR[lang][key] !== undefined) el.textContent = TR[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+document.querySelectorAll('.lang-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ applyLang(btn.getAttribute('data-lang')); });
+});
+applyLang('es'); // default language — change to 'en' here if you'd rather default to English
+
+/* ---------- demo tabs ----------
+   AUDIO SETUP: create a folder named "audio" next to this index.html file,
+   and place your 3 ElevenLabs recordings inside it with these exact names:
+     audio/booking.mp3     (reservar una cita nueva)
+     audio/reschedule.mp3  (cambiar una cita)
+     audio/cancel.mp3      (cancelar una cita)
+   The player and transcripts below are already wired to these paths —
+   nothing else needs to change once the 3 files are in place. */
+var DEMOS = {
+  booking: {
+    title: {es:'Reserva nueva', en:'New booking'},
+    sub: {es:'Corte de cabello · Martes, 17:00', en:'Corte de cabello · Tuesday, 5:00 PM'},
+    src: 'booking versionV2.mp3',
+    lines: [
+      {who:'agent', text:'Hola, soy Noah la asistente de IA de JM20, te puedo ayudar para agendar, cambiar o cancelar una reservacion.En que te puedo ayudar hoy?'},
+      {who:'caller', text:'Hola, quería reservar un corte de cabello para el martes a las cinco.'},
+      {who:'agent', text:'Perfecto, ¿me dices tu nombre completo?'},
+      {who:'caller', text:'Pablo Garcia.'},
+      {who:'agent', text:'Gracias, Pablo. Me das tu numero de telefono?'},
+      {who:'caller', text:'Seis uno dos, tres cuatro cinco, seis siete ocho.'},
+      {who:'agent', text:'Sí, hay disponibilidad para el martes a las cinco, quieres que la reserve?'},
+      {who:'caller', text:'Si por favor.'},
+      {who:'agent', text:'Listo, tu cita está confirmada para el martes a las cinco. Si necesitas cambiar o cancelar tu cita puedes llamarnos de nuevo en cualquier momento. Gracias y que tengas un buen dia.'}
+    ]
+  },
+  reschedule: {
+    title: {es:'Cambio de cita', en:'Reschedule'},
+    sub: {es:'Corte de cabello · Movida al jueves, 18:00', en:'Corte de cabello · Moved to Thursday, 6:00 PM'},
+    src: 'reagendar version2.mp3',
+    lines: [
+     {who:'agent', text:'Hola, soy Noah la asistente de IA de JM20, te puedo ayudar para agendar, cambiar o cancelar una reservacion.En que te puedo ayudar hoy?'},
+      {who:'caller', text:'Hola, tengo una cita el martes a las cinco pero necesito cambiarla.'},
+      {who:'agent', text:'Claro que si, ¿me das tu número de teléfono para localizar tu reserva?'},
+      {who:'caller', text:'Seis uno dos, tres cuatro cinco, seis siete ocho.'},
+      {who:'agent', text:'Encontré tu cita del martes a las cinco para corte de cabello ¿Para cuándo la quieres cambiar?'},
+      {who:'caller', text:'Para el jueves a las seis, si puede ser.'},
+      {who:'agent', text:'No tengo disponibilidad el jueves a las seis, te viene bien a las seis y media?.'},
+       {who:'caller', text:'Si, esta bien.'},
+      {who:'agent', text:'Listo Pablo, tu cita esta cambiada para el jueves a las seis y media. Si necesitas cambiar o cancelar tu cita puedes llamarnos de nuevo en cualquier momento. Gracias y que tengas un buen dia. '}
+    ]
+  },
+  cancel: {
+    title: {es:'Cancelación', en:'Cancellation'},
+    sub: {es:'Corte de cabello · Cancelada', en:'Corte de cabello · Cancelled'},
+    src: 'cancelar verson 1.mp3',
+    lines: [
+       {who:'agent', text:'Hola, soy Noah la asistente de IA de JM20, te puedo ayudar para agendar, cambiar o cancelar una reservacion.En que te puedo ayudar hoy?'},
+      {who:'caller', text:'Hola, quería cancelar mi cita de mañana.'},
+      {who:'agent', text:'Sin problema. ¿Me das tu número de teléfono para localizar tu reserva?'},
+      {who:'caller', text:'Seis uno dos, tres cuatro cinco, seis siete ocho.'},
+      {who:'agent', text:'Encontré tu cita de mañana a las seis y media para corte de cabello. Me confirmas que quieres cancelar la cita?'},
+      {who:'caller', text:'Sí, cancela por favor.'},
+      {who:'agent', text:'Tu cita se ha cancelado correctamente.Necesitas que te ayude con algo mas?'},
+      {who:'caller', text:'No gracias, es todo.'},
+      {who:'agent', text:'Listo Pablo, tu cita del jueves a las seis y media esta cancelada. Si necesitas agendar de nuevo una cita puedes llamarnos en cualquier momento, Gracias y que tengas un buen dia.'}
+    ]
+  }
+};
+
+/* ---------- audio <-> transcript sync ----------
+   Each line is revealed, highlighted and scrolled into view as the audio reaches it.
+   Timing: by default each line's start time is proportional to its text length across
+   the audio's real duration. For exact timing, add  t: <seconds>  to EVERY line of a demo
+   in DEMOS (e.g. {who:'agent', t:0, text:'...'}) and those values are used instead. */
+var demoAudio = document.getElementById('demoAudio');
+var transcriptEl = document.getElementById('transcript');
+var demoWaveEl = document.getElementById('demoWave');
+var durEl = document.getElementById('demoDuration');
+var lineEls = [], lineStarts = [], activeIdx = -2, rafId = null, currentKey = 'booking';
+
+function fmtTime(s){ s = Math.floor(s || 0); var m = Math.floor(s/60), r = s % 60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; }
+
+function computeStarts(){
+  var d = DEMOS[currentKey].lines;
+  lineStarts = [];
+  if(d.every(function(l){ return typeof l.t === 'number'; })){
+    d.forEach(function(l){ lineStarts.push(l.t); });
+    return;
+  }
+  var dur = demoAudio.duration;
+  if(!isFinite(dur) || dur <= 0) return;
+  var weights = d.map(function(l){ return l.text.length + 14; });
+  var total = weights.reduce(function(a,b){ return a+b; }, 0), acc = 0;
+  d.forEach(function(l,i){ lineStarts.push(acc/total*dur); acc += weights[i]; });
+}
+
+function indexAt(t){
+  var idx = -1;
+  for(var i=0;i<lineStarts.length;i++){ if(t >= lineStarts[i]) idx = i; }
+  return idx;
+}
+
+function scrollToLine(el){
+  var top = el.offsetTop + el.offsetHeight - transcriptEl.clientHeight + 16;
+  transcriptEl.scrollTo({top: Math.max(0, top), behavior:'smooth'});
+}
+
+function syncTranscript(force){
+  var t = demoAudio.currentTime;
+  durEl.textContent = fmtTime(t);
+  if(!lineStarts.length) return;
+  var syncing = t > 0 || !demoAudio.paused;
+  var ended = demoAudio.ended;
+  var idx = syncing ? indexAt(t) : -1;
+  if(ended) idx = lineEls.length - 1;
+  if(idx === activeIdx && !force) return;
+  activeIdx = idx;
+  transcriptEl.classList.toggle('sync', syncing);
+  lineEls.forEach(function(el,i){
+    el.classList.toggle('shown', syncing && i <= idx);
+    el.classList.toggle('past', syncing && i < idx);
+    el.classList.toggle('active', syncing && i === idx && !ended);
+  });
+  if(syncing && idx >= 0) scrollToLine(lineEls[idx]);
+}
+
+function loop(){ syncTranscript(); rafId = requestAnimationFrame(loop); }
+function stopLoop(){ if(rafId){ cancelAnimationFrame(rafId); rafId = null; } }
+
+function resetSync(){
+  stopLoop();
+  lineEls = [].slice.call(transcriptEl.children);
+  lineStarts = [];
+  activeIdx = -2;
+  demoWaveEl.classList.remove('playing');
+  transcriptEl.classList.remove('sync');
+  lineEls.forEach(function(el){ el.classList.remove('shown','past','active'); });
+  transcriptEl.scrollTop = 0;
+  durEl.textContent = '00:00';
+  computeStarts();
+}
+
+demoAudio.addEventListener('loadedmetadata', function(){ computeStarts(); syncTranscript(true); });
+demoAudio.addEventListener('durationchange', function(){ computeStarts(); });
+demoAudio.addEventListener('play', function(){ demoWaveEl.classList.add('playing'); stopLoop(); loop(); });
+demoAudio.addEventListener('pause', function(){ demoWaveEl.classList.remove('playing'); stopLoop(); syncTranscript(true); });
+demoAudio.addEventListener('ended', function(){ demoWaveEl.classList.remove('playing'); stopLoop(); syncTranscript(true); });
+demoAudio.addEventListener('seeked', function(){ syncTranscript(true); });
+demoAudio.addEventListener('timeupdate', function(){ if(demoAudio.paused) syncTranscript(); });
+
+var currentLang = 'es';
+var origApplyLang = applyLang;
+applyLang = function(lang){
+  currentLang = lang;
+  origApplyLang(lang);
+  var activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+  renderDemo(activeTab);
+};
+
+function renderDemo(key){
+  currentKey = key;
+  demoAudio.pause();
+  var d = DEMOS[key];
+  document.getElementById('panelTitle').textContent = d.title[currentLang];
+  document.getElementById('panelSub').textContent = d.sub[currentLang];
+  var t = document.getElementById('transcript');
+  t.innerHTML = '';
+  d.lines.forEach(function(l){
+    var div = document.createElement('div');
+    div.className = 'line ' + l.who;
+    div.textContent = l.text;
+    t.appendChild(div);
+  });
+  var audio = document.getElementById('demoAudio');
+  var source = audio.querySelector('source');
+  if(d.src){
+    source.src = d.src;
+    audio.load();
+  } else {
+    audio.removeAttribute('src');
+    source.src = '';
+    audio.load();
+  }
+  resetSync();
+}
+
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderDemo(btn.getAttribute('data-tab'));
+  });
+});
+
+applyLang('es');
+renderDemo('booking');
+</script>
+
+</body>
+</html>
