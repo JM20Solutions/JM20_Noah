@@ -242,6 +242,90 @@ footer p+p{margin-top:6px;color:var(--ink-48)}
 @media (max-width:520px){.logo-by{display:none}}
 @media (max-width:419px){.hero h1,.section-head h2,.cta-band h2,.about h2{font-size:28px}}
 
+/* ---------- dashboard preview (dark tile) ---------- */
+.dash{--auto:#0071e3;--man:#f07800;--hr:44px;--e:cubic-bezier(.22,1,.36,1);max-width:1000px;margin:0 auto;border-radius:18px;overflow:hidden;background:var(--parchment);color:var(--ink);text-align:left;font-size:14px;line-height:1.3;letter-spacing:-0.224px;box-shadow:var(--product-shadow);pointer-events:none;-webkit-user-select:none;user-select:none}
+.dash-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;height:40px;padding:0 20px;background:#000;color:#fff}
+.dash-live{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:-0.12px}
+.dash-live i{width:8px;height:8px;border-radius:50%;background:#30d158}
+.dash-top strong{font:600 13px/1.2 var(--font);text-align:center;letter-spacing:-0.224px}
+.dash-top .r{justify-self:end;display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:-0.12px;color:var(--body-muted)}
+.dash-out{border:1px solid #6e6e73;border-radius:9999px;padding:3px 12px;color:#fff}
+.dash-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(0,0,0,.08)}
+.dash-ttl{display:flex;align-items:baseline;gap:4px 14px;margin-right:auto;min-width:0}
+.dash-ttl strong{font:600 21px/1.19 var(--font-display);letter-spacing:.231px}
+.dash-ttl span{font-size:14px;color:var(--ink-48);white-space:nowrap}
+.dash-seg{display:inline-flex;align-items:center;padding:3px;border-radius:9999px;background:#e8e8ed}
+.dash-seg span{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 14px;border-radius:9999px;font-size:14px}
+.dash-seg .sel{background:#fff;font-weight:600}
+.dash-seg .ic{width:34px;padding:0}
+.dash-new{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 18px;border-radius:9999px;background:var(--primary);color:#fff;font-size:14px;white-space:nowrap}
+.dash-leg{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:14px 20px 12px;font-size:13px;font-weight:600;letter-spacing:-0.12px}
+.dash-leg span{display:inline-flex;align-items:center;gap:8px}
+.dash-leg b{display:inline-block;font-weight:600;font-variant-numeric:tabular-nums}
+.dash-sep{width:1px;height:14px;background:var(--hairline)}
+.dpt{display:inline-block;flex:none;width:16px;height:16px;border-radius:50%;background:var(--auto)}
+.dpt.m{width:14px;height:14px;margin:0 1px;border-radius:4px;background:var(--man)}
+.dsw{display:inline-block;width:16px;height:16px;border-radius:5px}
+.dsw.f{background:#fff;border:1px solid #c7c7cc}
+.dsw.o{background:#dedee3;border:1px solid #cbcbd1}
+.dash-body{position:relative;padding:0 20px 20px}
+.dg{display:grid;grid-template-columns:48px repeat(3,minmax(0,1fr));background:#fff;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;font-variant-numeric:tabular-nums;transition:opacity .25s ease}
+.dg.fade{opacity:0}
+.dg-h{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px;border-bottom:1px solid var(--hairline);background:#fff;font-size:14px;font-weight:600;line-height:1.2}
+.dg-gut{position:relative;height:calc(var(--hr)*8);background:#fff}
+.dg-gut span{position:absolute;right:8px;transform:translateY(-50%);font-size:12px;letter-spacing:-0.12px;color:var(--ink-48)}
+.dg-gut span:first-child{transform:translateY(6px)}
+.dg-col{position:relative;height:calc(var(--hr)*8);border-left:1px solid var(--hairline);background-color:#dedee3;background-image:linear-gradient(to bottom,transparent calc(var(--hr) - 1px),#cbcbd1 0);background-size:100% var(--hr)}
+.dg-av{position:absolute;left:0;right:0;top:calc(var(--s)*var(--hr)/60);height:calc(var(--d)*var(--hr)/60);background-color:#fff;background-image:linear-gradient(to bottom,transparent calc(var(--hr) - 1px),#ededf0 0);background-size:100% var(--hr)}
+.dk{position:absolute;left:4px;right:4px;top:calc(var(--s)*var(--hr)/60 + 1px);height:calc(var(--d)*var(--hr)/60 - 2px);display:flex;flex-direction:column;justify-content:center;gap:1px;padding:4px 10px;overflow:hidden;border-radius:8px;background:#fff;box-shadow:inset 0 0 0 1px #b4b4ba;color:var(--ink)}
+.dk.sm{flex-direction:row;align-items:center;gap:10px;padding:0 10px}
+.dk .l1{display:flex;align-items:center;gap:8px;min-width:0}
+.dk .nm{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:700;line-height:1.3}
+.dk .l2{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:12px;font-weight:600;line-height:1.3;letter-spacing:-0.12px;color:#3a3a3c}
+.dk.sm .l1{flex:0 1 auto;max-width:62%}
+.dk.sm .l2{flex:1 1 0;min-width:0}
+.dk.nw{display:none}
+.dk.nw.in{display:flex}
+.dash-toast{position:absolute;top:8px;right:32px;z-index:6;display:flex;align-items:center;gap:8px;max-width:calc(100% - 64px);padding:8px 14px;border-radius:9999px;background:#000;color:#fff;font-size:13px;font-weight:600;line-height:1.3;letter-spacing:-0.12px;white-space:nowrap;opacity:0;transform:translateY(-8px) scale(.96);filter:blur(4px);transition:opacity .25s ease,transform .25s ease,filter .25s ease}
+.dash-toast.show{opacity:1;transform:none;filter:none;transition-duration:.5s;transition-timing-function:var(--e)}
+.dash-toast i{flex:none;width:8px;height:8px;border-radius:50%;background:#30d158}
+.dash-toast span{overflow:hidden;text-overflow:ellipsis}
+/* default state stays visible; motion only layers on when JS is present */
+.js .dash .dk{opacity:0;transform:translateY(10px) scale(.97);transition:opacity .6s var(--e),transform .6s var(--e);transition-delay:calc(var(--i,0)*70ms + 200ms)}
+.js .dash.on .dk{opacity:1;transform:none}
+.js .dash .dk.nw.in{opacity:1;transform:none;transition:none;animation:dkDrop .6s var(--e) both,dkRing 1.8s ease-out both}
+.js .dash .dk.out{opacity:0;transform:scale(.96);transition:opacity .25s ease,transform .25s ease;transition-delay:0s}
+.bump{animation:dashBump .5s var(--e)}
+@keyframes dkDrop{from{opacity:0;transform:translateY(-14px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes dkRing{0%,35%{box-shadow:inset 0 0 0 2px var(--primary-focus)}100%{box-shadow:inset 0 0 0 1px #b4b4ba}}
+@keyframes dashBump{40%{transform:scale(1.28);color:var(--primary-focus)}100%{transform:none}}
+.dash-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:1100px;margin:56px auto 0}
+.dash-feat{border-top:1px solid var(--on-dark);padding:16px 0 0}
+.dash-feat h3{font-size:17px;line-height:1.24;letter-spacing:-0.374px;margin-bottom:8px;color:var(--fg)}
+.dash-feat p{font-size:14px;line-height:1.43;letter-spacing:-0.224px;color:var(--fg-2)}
+.dash-note{max-width:720px;margin:40px auto 0;text-align:center;font-size:12px;line-height:1.43;letter-spacing:-0.12px;color:var(--fg-2)}
+@media (max-width:1068px){.dash-feats{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:735px){
+  .dash-top{padding:0 14px}
+  .dash-bar,.dash-leg{padding-left:14px;padding-right:14px}
+  .dash-body{padding:0 14px 14px}
+  .dash-top .r span,.dash-seg.vw,.dash-seg.nv,.dash-leg .opt,.dash-leg .dash-sep{display:none}
+  .dash-toast{right:22px;max-width:calc(100% - 44px)}
+}
+@media (max-width:640px){
+  .dash-feats{grid-template-columns:1fr}
+  .dg{grid-template-columns:40px repeat(2,minmax(0,1fr))}
+  .dg .c3{display:none}
+  .dash-ttl strong{font-size:19px}
+  .dash{--hr:40px}
+  .dash-toast{top:6px;padding:7px 12px;font-size:12px}
+  .dk,.dk.sm{flex-direction:row;align-items:center;gap:8px;padding:0 8px}
+  .dk .l1{flex:1 1 auto;max-width:100%;gap:6px}
+  .dk .l2,.dash-ttl>span{display:none}
+  .dk .nm{font-size:12px}
+  .dpt{width:12px;height:12px}.dpt.m{width:11px;height:11px;margin:0 1px}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
@@ -330,6 +414,75 @@ footer p+p{margin-top:6px;color:var(--ink-48)}
       <div class="step"><div class="step-num">03</div><h3 data-i18n="step3h">Consulta el calendario</h3><p data-i18n="step3p">Disponibilidad real, no una suposición, sincronizada con tu sistema de reservas.</p></div>
       <div class="step"><div class="step-num">04</div><h3 data-i18n="step4h">Reserva al instante</h3><p data-i18n="step4p">Confirmada, cambiada o cancelada, actualizado en todas partes al momento.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="tile tile-dark" id="panel">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2 data-i18n="dashH2">Cada reserva de Noah, en tu panel al instante.</h2>
+      <p data-i18n="dashSub">Sabes qué ha reservado Noah mientras cortas, sin llamar a nadie ni revisar mensajes. Un solo panel con la agenda de todo tu equipo, que se actualiza sola.</p>
+    </div>
+
+    <div class="dash" id="dash" aria-hidden="true">
+      <div class="dash-top">
+        <span class="dash-live"><i></i><span data-i18n="dashLive">Conectado</span></span>
+        <strong>JM20 Bookings Dashboard</strong>
+        <div class="r"><span data-i18n="dashShop">Tu barbería</span><span class="dash-out" data-i18n="dashOut">Salir</span></div>
+      </div>
+      <div class="dash-bar">
+        <div class="dash-ttl"><strong data-i18n="dashDay">Martes</strong><span><span id="dCt">8</span> <span data-i18n="dashBk">reservas</span></span></div>
+        <div class="dash-seg vw"><span class="sel" data-i18n="dashDayBtn">Día</span><span data-i18n="dashWeekBtn">Semana</span></div>
+        <div class="dash-seg nv">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span>
+          <span data-i18n="dashToday">Hoy</span>
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+        </div>
+        <span class="dash-new"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="dashNew">Nueva reserva</span></span>
+      </div>
+      <p class="dash-leg">
+        <span><i class="dpt"></i><span data-i18n="dashAuto">Reserva automática</span> <b id="dCa">6</b></span>
+        <span><i class="dpt m"></i><span data-i18n="dashManual">Reserva manual</span> <b id="dCm">2</b></span>
+        <i class="dash-sep"></i>
+        <span class="opt"><i class="dsw f"></i><span data-i18n="dashFree">Disponible</span></span>
+        <span class="opt"><i class="dsw o"></i><span data-i18n="dashOff">Fuera de horario</span></span>
+      </p>
+      <div class="dash-body">
+        <div class="dash-toast" id="dashToast"><i></i><span id="dashToastTxt"></span></div>
+        <div class="dg" id="dashGrid">
+          <div class="dg-h"></div><div class="dg-h">Carlos</div><div class="dg-h">Álex</div><div class="dg-h c3">Marcos</div>
+          <div class="dg-gut"><span>10:00</span><span style="top:calc(var(--hr)*1)">11:00</span><span style="top:calc(var(--hr)*2)">12:00</span><span style="top:calc(var(--hr)*3)">13:00</span><span style="top:calc(var(--hr)*4)">14:00</span><span style="top:calc(var(--hr)*5)">15:00</span><span style="top:calc(var(--hr)*6)">16:00</span><span style="top:calc(var(--hr)*7)">17:00</span></div>
+          <div class="dg-col">
+            <div class="dg-av" style="--s:0;--d:480"></div>
+            <div class="dk sm" style="--s:0;--d:45;--i:0"><span class="l1"><i class="dpt"></i><span class="nm">Luis M.</span></span><span class="l2">10:00–10:45 · Corte</span></div>
+            <div class="dk sm" style="--s:120;--d:30;--i:3"><span class="l1"><i class="dpt m"></i><span class="nm">Andrés P.</span></span><span class="l2">12:00–12:30 · Barba</span></div>
+            <div class="dk" id="dkIv" style="--s:330;--d:60;--i:6"><span class="l1"><i class="dpt"></i><span class="nm">Iván R.</span></span><span class="l2">15:30–16:30 · Corte y barba</span></div>
+            <div class="dk sm nw" id="dkN2" style="--s:180;--d:30"><span class="l1"><i class="dpt m"></i><span class="nm">Hugo B.</span></span><span class="l2">13:00–13:30 · Corte</span></div>
+            <div class="dk sm nw" id="dkN1" style="--s:420;--d:30"><span class="l1"><i class="dpt"></i><span class="nm">Pablo García</span></span><span class="l2">17:00–17:30 · Corte de cabello</span></div>
+          </div>
+          <div class="dg-col">
+            <div class="dg-av" style="--s:0;--d:240"></div>
+            <div class="dg-av" style="--s:300;--d:180"></div>
+            <div class="dk sm" style="--s:30;--d:45;--i:1"><span class="l1"><i class="dpt"></i><span class="nm">Sergio T.</span></span><span class="l2">10:30–11:15 · Corte</span></div>
+            <div class="dk" style="--s:150;--d:60;--i:4"><span class="l1"><i class="dpt"></i><span class="nm">Daniel O.</span></span><span class="l2">12:30–13:30 · Corte y barba</span></div>
+            <div class="dk sm" style="--s:360;--d:30;--i:7"><span class="l1"><i class="dpt m"></i><span class="nm">Raúl C.</span></span><span class="l2">16:00–16:30 · Barba</span></div>
+          </div>
+          <div class="dg-col c3">
+            <div class="dg-av" style="--s:60;--d:420"></div>
+            <div class="dk sm" style="--s:60;--d:45;--i:2"><span class="l1"><i class="dpt"></i><span class="nm">Pablo V.</span></span><span class="l2">11:00–11:45 · Corte</span></div>
+            <div class="dk" style="--s:270;--d:60;--i:5"><span class="l1"><i class="dpt"></i><span class="nm">Jorge L.</span></span><span class="l2">14:30–15:30 · Corte y barba</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-feats">
+      <div class="dash-feat"><h3 data-i18n="dashF1h">Se actualiza sola</h3><p data-i18n="dashF1p">Cuando Noah confirma, cambia o cancela una cita, aparece en tu panel al momento. Sin recargar.</p></div>
+      <div class="dash-feat"><h3 data-i18n="dashF2h">Automáticas y manuales, a simple vista</h3><p data-i18n="dashF2p">Un vistazo basta para ver qué ha reservado Noah y qué has anotado tú.</p></div>
+      <div class="dash-feat"><h3 data-i18n="dashF3h">Toda la agenda, por día o por semana</h3><p data-i18n="dashF3p">Una columna por profesional, con las horas libres y el horario de cada uno a la vista.</p></div>
+      <div class="dash-feat"><h3 data-i18n="dashF4h">Tú tienes la última palabra</h3><p data-i18n="dashF4p">Crea una reserva, cambia la hora o cancela desde el mismo panel, solo en huecos que de verdad están libres.</p></div>
+    </div>
+    <p class="dash-note" data-i18n="dashNote">Vista de ejemplo con datos ficticios. Entras con la cuenta de tu barbería.</p>
   </div>
 </section>
 
@@ -435,6 +588,10 @@ footer p+p{margin-top:6px;color:var(--ink-48)}
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false"><span class="txt" data-i18n="faqQ3">¿Con qué calendarios funciona?</span><span class="faq-plus">+</span></button>
         <div class="faq-a"><p data-i18n="faqA3">Noah anota cada reserva y te la envía por correo como invitación de calendario, así que te llega al calendario que uses.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="txt" data-i18n="faqQ6">¿Puedo ver y gestionar las reservas yo mismo?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a"><p data-i18n="faqA6">Sí. Tienes un panel con la agenda de todo tu equipo, por día o por semana. Ves las reservas de Noah y las que añades tú, y puedes crear, cambiar o cancelar una cita desde ahí.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false"><span class="txt" data-i18n="faqQ4">¿Puede gestionar más de un local o servicio?</span><span class="faq-plus">+</span></button>
@@ -558,6 +715,19 @@ var TR = {
     faqA4: "Sí, cada línea de negocio se configura con sus propios servicios, disponibilidad y calendario.",
     faqQ5: "¿Se graban las llamadas?", faqA5: "No, las llamadas no se graban. Para atenderlas, la conversación se procesa en tiempo real con proveedores de telefonía y de voz con IA.", audioErr: "No se pudo cargar el audio. Recarga la página o inténtalo de nuevo.",
     aboutH2: "Sobre JM20", aboutP1: "En JM20 desarrollamos soluciones de IA agéntica para atención al cliente. Creamos agentes capaces de gestionar interacciones, ejecutar tareas y seguir procesos de principio a fin.", aboutP2: "Nuestro enfoque es práctico: usar IA para resolver problemas operativos concretos y mantener la calidad del servicio. Noah aplica ese enfoque a la recepción telefónica de negocios con citas.", aboutP3: "Detrás de JM20 hay experiencia en operaciones de atención al cliente.",
+    dashH2: "Cada reserva de Noah, en tu panel al instante.",
+    dashSub: "Sabes qué ha reservado Noah mientras cortas, sin llamar a nadie ni revisar mensajes. Un solo panel con la agenda de todo tu equipo, que se actualiza sola.",
+    dashLive: "Conectado", dashShop: "Tu barbería", dashOut: "Salir", dashDay: "Martes", dashBk: "reservas",
+    dashDayBtn: "Día", dashWeekBtn: "Semana", dashToday: "Hoy", dashNew: "Nueva reserva",
+    dashAuto: "Reserva automática", dashManual: "Reserva manual", dashFree: "Disponible", dashOff: "Fuera de horario",
+    dashT1: "Noah reservó a Pablo García · 17:00", dashT2: "Reserva manual: Hugo B. · 13:00", dashT3: "Cita cancelada: Iván R. · 15:30",
+    dashF1h: "Se actualiza sola", dashF1p: "Cuando Noah confirma, cambia o cancela una cita, aparece en tu panel al momento. Sin recargar.",
+    dashF2h: "Automáticas y manuales, a simple vista", dashF2p: "Un vistazo basta para ver qué ha reservado Noah y qué has anotado tú.",
+    dashF3h: "Toda la agenda, por día o por semana", dashF3p: "Una columna por profesional, con las horas libres y el horario de cada uno a la vista.",
+    dashF4h: "Tú tienes la última palabra", dashF4p: "Crea una reserva, cambia la hora o cancela desde el mismo panel, solo en huecos que de verdad están libres.",
+    dashNote: "Vista de ejemplo con datos ficticios. Entras con la cuenta de tu barbería.",
+    faqQ6: "¿Puedo ver y gestionar las reservas yo mismo?",
+    faqA6: "Sí. Tienes un panel con la agenda de todo tu equipo, por día o por semana. Ves las reservas de Noah y las que añades tú, y puedes crear, cambiar o cancelar una cita desde ahí.",
     ctaH2: "Deja de perder reservas",
     ctaP: "15 minutos para enseñarte exactamente cómo funcionaría en tu negocio.",
     ctaBtn: "Reserva tu demo de 15 min",
@@ -638,6 +808,19 @@ var TR = {
     faqA3: "Noah records each booking and emails it to you as a calendar invite, so it reaches whichever calendar you use.",
     faqQ4: "Can it handle more than one location or service?",
     faqA4: "Yes, each business line is set up with its own services, availability, and calendar.",
+    dashH2: "Every booking Noah takes, on your dashboard instantly.",
+    dashSub: "Know what Noah booked while you were mid-cut, without calling anyone or checking messages. One dashboard with your whole team's calendar, updating on its own.",
+    dashLive: "Connected", dashShop: "Your shop", dashOut: "Sign out", dashDay: "Tuesday", dashBk: "bookings",
+    dashDayBtn: "Day", dashWeekBtn: "Week", dashToday: "Today", dashNew: "New booking",
+    dashAuto: "Automatic booking", dashManual: "Manual booking", dashFree: "Available", dashOff: "Outside hours",
+    dashT1: "Noah booked Pablo García · 17:00", dashT2: "Manual booking: Hugo B. · 13:00", dashT3: "Appointment cancelled: Iván R. · 15:30",
+    dashF1h: "Updates itself", dashF1p: "When Noah confirms, reschedules or cancels an appointment, it shows up on your dashboard right away. No reloading.",
+    dashF2h: "Automatic vs. manual, at a glance", dashF2p: "One look tells you what Noah booked and what you added yourself.",
+    dashF3h: "Your whole calendar, by day or week", dashF3p: "One column per team member, with free hours and each person's schedule in view.",
+    dashF4h: "You have the last word", dashF4p: "Create a booking, change the time or cancel from the same dashboard, only into slots that are truly free.",
+    dashNote: "Sample view with fictional data. You sign in with your shop's account.",
+    faqQ6: "Can I see and manage the bookings myself?",
+    faqA6: "Yes. You get a dashboard with your whole team's calendar, by day or week. You see Noah's bookings and the ones you add yourself, and you can create, reschedule or cancel an appointment from there.",
     ctaH2: "Stop losing bookings to a ringing phone.",
     ctaP: "15 minutes to show you exactly how it'd work for your business.",
     ctaBtn: "Book your 15-min demo",
@@ -887,6 +1070,71 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
 demoAudio.addEventListener('error',function(){var sr=demoAudio.querySelector('source');if(sr&&sr.getAttribute('src')){document.getElementById('audioErr').hidden=false;}},true);
 applyLang('es');
 renderDemo('booking');
+
+/* ---------- dashboard preview: a booking arrives live ---------- */
+(function(){
+  var dash = document.getElementById('dash'); if(!dash) return;
+  var $ = function(id){ return document.getElementById(id); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nb1=$('dkN1'), nb2=$('dkN2'), iv=$('dkIv'), toast=$('dashToast'), toastTxt=$('dashToastTxt'), grid=$('dashGrid');
+  var cA=$('dCa'), cM=$('dCm'), cT=$('dCt');
+  var timers=[], played=false;
+  function later(fn,ms){ timers.push(setTimeout(fn,ms)); }
+  function stop(){ timers.forEach(clearTimeout); timers=[]; toast.classList.remove('show'); }
+  function bump(el){ el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+  function setCounts(a,m,which){
+    cA.textContent=a; cM.textContent=m; cT.textContent=a+m;
+    if(which){ bump(which==='m'?cM:cA); bump(cT); }
+  }
+  function countUp(){
+    var t0=performance.now(), dur=900, from=300;
+    (function f(now){
+      var p=Math.min(1,Math.max(0,(now-t0-from)/dur)), e=p===1?1:1-Math.pow(2,-10*p);
+      var a=Math.round(6*e), m=Math.round(2*e);
+      setCounts(a,m);
+      if(p<1) requestAnimationFrame(f);
+    })(t0);
+  }
+  function say(key){
+    toastTxt.setAttribute('data-i18n',key);
+    toastTxt.textContent = TR[currentLang][key];
+    toast.classList.add('show');
+  }
+  function hide(){ toast.classList.remove('show'); }
+  function reset(){
+    nb1.classList.remove('in'); nb2.classList.remove('in'); iv.classList.remove('out');
+    setCounts(6,2); hide();
+  }
+  function sequence(first){
+    reset();
+    var o = first ? 2200 : 700;
+    later(function(){ nb1.classList.add('in'); say('dashT1'); setCounts(7,2,'a'); }, o);
+    later(hide, o+2800);
+    later(function(){ nb2.classList.add('in'); say('dashT2'); setCounts(7,3,'m'); }, o+3600);
+    later(hide, o+6400);
+    later(function(){ iv.classList.add('out'); say('dashT3'); setCounts(6,3,'a'); }, o+7200);
+    later(hide, o+10000);
+    later(function(){ grid.classList.add('fade'); }, o+11000);
+    later(function(){ reset(); grid.classList.remove('fade'); }, o+11300);
+    later(function(){ sequence(false); }, o+11500);
+  }
+  if(reduce){
+    dash.classList.add('on'); nb1.classList.add('in'); setCounts(7,2); return;
+  }
+  var visible=false;
+  function sync(){
+    if(visible && !document.hidden){
+      if(!played){ played=true; dash.classList.add('on'); countUp(); sequence(true); }
+      else if(!timers.length){ sequence(false); }
+    } else { stop(); }
+  }
+  new IntersectionObserver(function(es){
+    var e=es[0], need=Math.min(e.boundingClientRect.height*.7, window.innerHeight*.7);
+    visible = e.isIntersecting && e.intersectionRect.height >= need;
+    sync();
+  },{threshold:[0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]}).observe(dash);
+  document.addEventListener('visibilitychange', sync);
+})();
 </script>
 
 </body>
