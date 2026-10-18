@@ -27,6 +27,86 @@
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <script>document.documentElement.className+=" js"</script>
+<style id="jm20-consent-css">#jm20-consent{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:3000;max-width:760px;margin:0 auto;background:#1d1d1f;color:#f5f5f7;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px 20px;box-shadow:0 16px 48px rgba(0,0,0,.6);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}#jm20-consent strong{display:block;font-size:15px;margin-bottom:4px}#jm20-consent p{margin:0 0 12px;color:#d2d2d7}#jm20-consent .jm-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}#jm20-consent button{font:500 14px system-ui,sans-serif;min-height:40px;padding:0 20px;border-radius:9999px;cursor:pointer;color:#fff}#jm20-consent .jm-accept{background:#0066cc;border:1px solid #0066cc}#jm20-consent .jm-reject{background:transparent;border:1px solid rgba(255,255,255,.55)}#jm20-consent .jm-more{background:none;border:none;text-decoration:underline;padding:0 4px;margin-left:auto;color:#d2d2d7}</style>
+<script>
+  /* Consent-gated analytics.
+     Google Analytics is NOT loaded until the visitor clicks Accept.
+     Consent defaults follow Google's documented consent-mode sequence:
+     default = denied, then update = granted after the visitor agrees. */
+  (function () {
+    var GA_ID = 'G-CCL5B23RY5', KEY = 'jm20_consent', gaLoaded = false, banner = null;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
+
+    var TXT = {
+      en: { title: 'Cookies & analytics', body: 'We would like to use Google Analytics to understand how our site is used. It only runs if you accept. You can change your choice at any time from “Cookie settings” in the footer.', accept: 'Accept', reject: 'Reject', more: 'Privacy policy', label: 'Cookie preferences' },
+      es: { title: 'Cookies y analítica', body: 'Nos gustaría usar Google Analytics para entender cómo se usa nuestro sitio. Solo se activa si aceptas. Puedes cambiar tu elección en cualquier momento desde «Configuración de cookies» en el pie de página.', accept: 'Aceptar', reject: 'Rechazar', more: 'Política de privacidad', label: 'Preferencias de cookies' }
+    };
+    function lang() { return (document.documentElement.lang || 'en').slice(0, 2) === 'es' ? 'es' : 'en'; }
+    function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function write(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+    function loadGA() {
+      if (gaLoaded) return; gaLoaded = true;
+      var sc = document.createElement('script');
+      sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(sc);
+      gtag('js', new Date());
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      gtag('config', GA_ID);
+    }
+    function clearGACookies() {
+      var host = location.hostname, parts = host.split('.'), domains = ['', host, '.' + host];
+      if (parts.length > 2) domains.push('.' + parts.slice(-2).join('.'));
+      document.cookie.split(';').forEach(function (c) {
+        var name = c.split('=')[0].trim();
+        if (name.indexOf('_ga') === 0) domains.forEach(function (d) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+        });
+      });
+    }
+    function decide(v) {
+      write(v);
+      if (v === 'granted') loadGA();
+      else { gtag('consent', 'update', { analytics_storage: 'denied' }); clearGACookies(); }
+      hide();
+    }
+    function hide() { if (banner) { banner.remove(); banner = null; } }
+    function paint() {
+      if (!banner) return;
+      var t = TXT[lang()];
+      banner.setAttribute('aria-label', t.label);
+      banner.querySelector('[data-k=title]').textContent = t.title;
+      banner.querySelector('[data-k=body]').textContent = t.body;
+      banner.querySelector('[data-k=more]').textContent = t.more;
+      banner.querySelector('[data-k=reject]').textContent = t.reject;
+      banner.querySelector('[data-k=accept]').textContent = t.accept;
+    }
+    function show() {
+      if (banner) { banner.querySelector('[data-k=accept]').focus(); return; }
+      if (!document.getElementById('jm20-consent-css')) {
+        var st = document.createElement('style'); st.id = 'jm20-consent-css';
+        st.textContent = '#jm20-consent{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:3000;max-width:760px;margin:0 auto;background:#1d1d1f;color:#f5f5f7;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px 20px;box-shadow:0 16px 48px rgba(0,0,0,.6);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}#jm20-consent strong{display:block;font-size:15px;margin-bottom:4px}#jm20-consent p{margin:0 0 12px;color:#d2d2d7}#jm20-consent .jm-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}#jm20-consent button{font:500 14px system-ui,sans-serif;min-height:40px;padding:0 20px;border-radius:9999px;cursor:pointer;color:#fff}#jm20-consent .jm-accept{background:#0066cc;border:1px solid #0066cc}#jm20-consent .jm-reject{background:transparent;border:1px solid rgba(255,255,255,.55)}#jm20-consent .jm-more{background:none;border:none;text-decoration:underline;padding:0 4px;margin-left:auto;color:#d2d2d7}';
+        document.head.appendChild(st);
+      }
+      banner = document.createElement('div');
+      banner.id = 'jm20-consent'; banner.setAttribute('role', 'dialog'); banner.setAttribute('aria-modal', 'false');
+      banner.setAttribute('aria-labelledby', 'jm20-consent-title'); banner.setAttribute('aria-describedby', 'jm20-consent-body');
+      banner.innerHTML = '<strong id="jm20-consent-title" data-k="title"></strong><p id="jm20-consent-body" data-k="body"></p><div class="jm-row"><button type="button" class="jm-reject" data-k="reject"></button><button type="button" class="jm-accept" data-k="accept"></button><button type="button" class="jm-more" data-k="more"></button></div>';
+      banner.querySelector('[data-k=accept]').addEventListener('click', function () { decide('granted'); });
+      banner.querySelector('[data-k=reject]').addEventListener('click', function () { decide('denied'); });
+      banner.querySelector('[data-k=more]').addEventListener('click', function () { window.location.href = (lang() === 'es' ? 'https://jm20aisolutions.com/politica-de-privacidad' : 'https://jm20aisolutions.com/privacy-policy'); });
+      banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') decide('denied'); });
+      document.body.appendChild(banner);
+      paint();
+    }
+    window.jm20OpenConsent = show;
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    function init() { var c = read(); if (c === 'granted') loadGA(); else if (c !== 'denied') show(); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  })();
+  </script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -65,7 +145,7 @@
         {
           "@type": "Offer",
           "name": "Pago por uso",
-          "description": "180€ de configuración (pago único) · sin cuota mensual. 0,50€ por minuto (mínimo 1 minuto). Paga solo lo que uses. Cancela cuando quieras.",
+          "description": "180€ de configuración (pago único) · sin cuota mensual. 0,40€ por minuto (mínimo 1 minuto). Paga solo lo que uses. Cancela cuando quieras.",
           "price": "0",
           "priceCurrency": "EUR",
           "priceSpecification": {
@@ -504,6 +584,8 @@ main:focus{outline:none}
 .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 20px;margin-top:16px}
 .footer-links a{display:inline-flex;align-items:center;min-height:24px;font-size:12px;letter-spacing:-0.12px;color:var(--ink-80);text-decoration:underline;text-underline-offset:2px}
 .footer-links a:hover{color:var(--primary)}
+.footer-links button{display:inline-flex;align-items:center;min-height:24px;background:none;border:0;padding:0;font:inherit;font-size:12px;letter-spacing:-0.12px;color:var(--ink-80);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.footer-links button:hover{color:var(--primary)}
 </style>
 </head>
 <body>
@@ -536,7 +618,7 @@ main:focus{outline:none}
     <h1 data-i18n="heroH1">Cada llamada que no contestas, la contesta tu competencia.</h1>
     <p class="lead" data-i18n="heroLead">Noah es la recepcionista de IA para barberías, peluquerías y salones. Contesta las llamadas que no puedes atender, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="https://cal.eu/jmsolutions-mng6gi/noah-calendar" target="_blank" rel="noopener" data-i18n="heroCta1">Reserva una demo</a>
+      <a class="btn-primary" href="https://cal.eu/jmsolutions-mng6gi/noah-calendar" target="_blank" rel="noopener" data-i18n="heroCta1">Reserva una demo de 15 min</a>
       <a class="btn-ghost" href="#demo" data-i18n="heroCta2">Escucha una demo ↓</a>
     </div>
     <div class="hero-demo" id="demo">
@@ -680,7 +762,7 @@ main:focus{outline:none}
         <div class="price-amount">0€<span data-i18n="perMonth"> /mes</span></div>
         <div class="price-sub" data-i18n="plan0Sub">180€ de configuración (pago único) · sin cuota mensual</div>
         <ul class="price-features">
-          <li><svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOveragePayg">0,50€ por minuto (mínimo 1 minuto)</span></li>
+          <li><svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featOveragePayg">0,40€ por minuto (mínimo 1 minuto)</span></li>
           <li><svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featPaygUse">Paga solo lo que uses</span></li>
           <li><svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="featCancel">Cancela cuando quieras</span></li>
         </ul>
@@ -822,6 +904,7 @@ main:focus{outline:none}
     <a href="https://jm20aisolutions.com/" data-i18n="footMain">Web de JM20 AI Solutions</a>
     <a href="https://jm20aisolutions.com/terminos-de-servicio" data-href-es="https://jm20aisolutions.com/terminos-de-servicio" data-href-en="https://jm20aisolutions.com/terms-of-service" data-i18n="footLegal">Términos de servicio</a>
     <a href="https://jm20aisolutions.com/politica-de-privacidad" data-href-es="https://jm20aisolutions.com/politica-de-privacidad" data-href-en="https://jm20aisolutions.com/privacy-policy" data-i18n="footPrivacy">Política de privacidad</a>
+    <button type="button" id="cookie-settings" data-i18n="footCookies">Configuración de cookies</button>
   </nav>
 </footer>
 
@@ -853,11 +936,11 @@ var TR = {
     metaTitle: "Noah by JM20: recepcionista de IA que gestiona reservas", by: "by",
     metaDesc: "Noah contesta las llamadas que no puedes atender, consulta tu calendario real y reserva, cambia o cancela citas.",
     skipLink: "Saltar al contenido", qrLabel: "Código QR: https://noah.jm20aisolutions.com/", footNavLabel: "Enlaces del pie de página",
-    footMain: "Web de JM20 AI Solutions", footLegal: "Términos de servicio", footPrivacy: "Política de privacidad",
+    footMain: "Web de JM20 AI Solutions", footLegal: "Términos de servicio", footPrivacy: "Política de privacidad", footCookies: "Configuración de cookies",
     navHow: "Cómo funciona", navDemo: "Demo", navPricing: "Precios", navFaq: "Preguntas", navCta: "Reserva una demo",
     heroH1: "Cada llamada que no contestas, la contesta tu competencia.",
     heroLead: "Noah es la recepcionista de IA para barberías, peluquerías y salones. Contesta las llamadas que no puedes atender, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento.",
-    heroCta1: "Reserva una demo", heroCta2: "Escucha una demo ↓",
+    heroCta1: "Reserva una demo de 15 min", heroCta2: "Escucha una demo ↓",
 
     howH2: "Cuatro pasos. Sin ninguna app que tus clientes tengan que descargar.",
     howSub: "Tus clientes llaman al número de siempre. Cuando tú no contestas, Noah atiende y te envía cada reserva a tu calendario, aunque sea domingo a las nueve de la noche o estés a mitad de un corte.",
@@ -882,7 +965,7 @@ var TR = {
     perMonth: " /mes", perYear: " /año",
     tagPopular: "INSTALACIÓN FINANCIADA", tagSave: "AHORRA MÁS",
     featMinStarter: "150 minutos al mes incluidos", featMinPro: "200 minutos al mes incluidos", featMinFull: "300 minutos al mes incluidos",
-    featOverage: "0,35€ por minuto adicional", featOveragePayg: "0,50€ por minuto (mínimo 1 minuto)", featPaygUse: "Paga solo lo que uses",
+    featOverage: "0,35€ por minuto adicional", featOveragePayg: "0,40€ por minuto (mínimo 1 minuto)", featPaygUse: "Paga solo lo que uses",
     featCancel: "Cancela cuando quieras", featNoUpfront: "Sin instalación por adelantado",
     featBestPrice: "El precio más bajo por minuto", planCta: "Lo quiero",
     priceNote: "Precios + IVA. Pro tiene un compromiso de 6 meses y Anual de 12 meses; la cancelación anticipada conlleva el pago del saldo pendiente de la configuración. Starter y Pay As You Go no tienen permanencia.",
@@ -912,7 +995,7 @@ var TR = {
     faqA6: "Sí. Tienes un panel con la agenda de todo tu equipo, por día o por semana. Ves las reservas de Noah y las que añades tú, y puedes crear, cambiar o cancelar una cita desde ahí.",
     ctaH2: "Deja de perder reservas",
     ctaP: "15 minutos para enseñarte exactamente cómo funcionaría en tu negocio.",
-    ctaBtn: "Reserva una demo",
+    ctaBtn: "Reserva tu demo de 15 min",
     footerText: "Noah es un producto de JM20 AI Solutions · Reservas por voz, bien hechas.",
     footerCopy: "© 2026 JM20 AI Solutions. Todos los derechos reservados.",
     cmpH2: "¿Por qué elegir Noah?",
@@ -948,11 +1031,11 @@ var TR = {
     metaTitle: "Noah by JM20: AI receptionist that handles your bookings", by: "by",
     metaDesc: "Noah answers the calls you can't take, checks your real calendar, and books, reschedules, or cancels appointments.",
     skipLink: "Skip to content", qrLabel: "QR code: https://noah.jm20aisolutions.com/", footNavLabel: "Footer links",
-    footMain: "JM20 AI Solutions website", footLegal: "Terms of service", footPrivacy: "Privacy policy",
+    footMain: "JM20 AI Solutions website", footLegal: "Terms of service", footPrivacy: "Privacy policy", footCookies: "Cookie settings",
     navHow: "How it works", navDemo: "Demo", navPricing: "Pricing", navFaq: "FAQ", navCta: "Book a demo",
     heroH1: "Every call you don't answer, your competitor does ",
     heroLead: "Noah is the AI receptionist for barbershops, hair salons and beauty salons. It answers the calls you can't take, checks your real availability, and books, reschedules, or cancels the appointment on the spot.",
-    heroCta1: "Book a demo", heroCta2: "Listen to a demo ↓",
+    heroCta1: "Book a 15-min demo", heroCta2: "Listen to a demo ↓",
 
     howH2: "Four steps. No app for your customers to download.",
     howSub: "Your customers call your usual number. When you don't answer, Noah picks up and sends every booking to your calendar, even at 9pm on a Sunday or mid-haircut.",
@@ -977,7 +1060,7 @@ var TR = {
     perMonth: " /mo", perYear: " /yr",
     tagPopular: "No setup upfront", tagSave: "SAVE MORE",
     featMinStarter: "150 minutes included per month", featMinPro: "200 minutes included per month", featMinFull: "300 minutes included per month",
-    featOverage: "€0.35 per extra minute", featOveragePayg: "€0.50 per minute (1-minute minimum)", featPaygUse: "Pay only for what you use",
+    featOverage: "€0.35 per extra minute", featOveragePayg: "€0.40 per minute (1-minute minimum)", featPaygUse: "Pay only for what you use",
     featCancel: "Cancel anytime", featNoUpfront: "No setup paid upfront",
     featBestPrice: "The lowest price per minute", planCta: "I want this",
     priceNote: "Prices + VAT. Pro carries a 6-month commitment and Annual a 12-month commitment; early cancellation requires paying the remaining setup balance. Starter and Pay As You Go have no commitment.",
@@ -1007,7 +1090,7 @@ var TR = {
     faqA6: "Yes. You get a dashboard with your whole team's calendar, by day or week. You see Noah's bookings and the ones you add yourself, and you can create, reschedule or cancel an appointment from there.",
     ctaH2: "Stop losing bookings to a ringing phone.",
     ctaP: "15 minutes to show you exactly how it'd work for your business.",
-    ctaBtn: "Book a demo",
+    ctaBtn: "Book your 15-min demo",
     footerText: "Noah is a product of JM20 AI Solutions · Voice bookings, done right.",
     footerCopy: "© 2026 JM20 AI Solutions. All rights reserved.",
     cmpH2: "Why choose Noah?",
@@ -1060,6 +1143,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
   btn.addEventListener('click', function(){ applyLang(btn.getAttribute('data-lang')); });
 });
 applyLang('es'); // default language, change to 'en' here if you'd rather default to English
+document.getElementById('cookie-settings').addEventListener('click', function(){ if (window.jm20OpenConsent) window.jm20OpenConsent(); });
 
 /* ---------- demo tabs ----------
    AUDIO SETUP: create a folder named "audio" next to this index.html file,
@@ -1088,7 +1172,7 @@ var DEMOS = {
   },
   reschedule: {
     title: {es:'Cambio de cita', en:'Reschedule'},
-    sub: {es:'Corte de cabello · Movida al jueves, 18:30', en:'Haircut · Moved to Thursday, 6:30 PM'},
+    sub: {es:'Corte de cabello · Movida al jueves, 18:00', en:'Haircut · Moved to Thursday, 6:00 PM'},
     src: 'audio/reschedule.mp3',
     lines: [
      {who:'agent', text:'Hola, soy Noah la asistente de IA de JM20, te puedo ayudar para agendar, cambiar o cancelar una reservacion.En que te puedo ayudar hoy?'},
