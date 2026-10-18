@@ -1,0 +1,47 @@
+# Noah by JM20 AI Solutions
+
+> Noah es la recepcionista de IA para barberías, peluquerías y salones. Contesta las llamadas que no puedes atender, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento.
+
+Noah es un producto de JM20 AI Solutions (https://jm20aisolutions.com/). Idiomas de la web: español e inglés.
+
+## Cómo funciona
+
+1. El cliente llama: Tu número de siempre. Si no contestas, el desvío pasa la llamada a Noah.
+2. Noah contesta: Una conversación natural, no un menú de teclas. Entiende lo que necesitan.
+3. Consulta el calendario: Disponibilidad real, no una suposición.
+4. Reserva al instante: Confirmada, cambiada o cancelada, y la invitación te llega al momento.
+
+## Precios (más IVA)
+
+- Pago por uso: 0€/mes. 180€ de configuración (pago único) · sin cuota mensual. 0,40€ por minuto (mínimo 1 minuto); Paga solo lo que uses; Cancela cuando quieras.
+- Starter: 49€/mes. + 180€ de instalación (pago único) · sin permanencia. 150 minutos al mes incluidos; 0,35€ por minuto adicional; Cancela cuando quieras.
+- Pro: 79€/mes. Configuración fraccionada en 6 meses, después 49€/mes · compromiso de 6 meses. 200 minutos al mes incluidos; 0,35€ por minuto adicional; Sin instalación por adelantado.
+- Anual · pago único: 650€/año. Instalación incluida · equivale a 54€/mes · ahorras 118€ frente a Starter · compromiso de 12 meses. 300 minutos al mes incluidos; 0,35€ por minuto adicional; El precio más bajo por minuto.
+
+Precios + IVA. Pro tiene un compromiso de 6 meses y Anual de 12 meses; la cancelación anticipada conlleva el pago del saldo pendiente de la configuración. Starter y Pay As You Go no tienen permanencia.
+
+## Preguntas frecuentes
+
+**¿Necesito un número de teléfono nuevo?**
+No. Tus clientes siguen llamando a tu número de siempre. Tú activas en tu teléfono un desvío «si no contestas» hacia Noah. Es una opción de tu operador y te explicamos cómo activarla.
+
+**¿Qué pasa si Noah no puede ayudar con algo?**
+Se mantiene en lo suyo, reservar, cambiar y cancelar citas, y avisa al cliente cuando algo queda fuera de eso.
+
+**¿Con qué calendarios funciona?**
+Noah anota cada reserva y te la envía por correo como invitación de calendario, así que te llega al calendario que uses.
+
+**¿Puedo ver y gestionar las reservas yo mismo?**
+Sí. Tienes un panel con la agenda de todo tu equipo, por día o por semana. Ves las reservas de Noah y las que añades tú, y puedes crear, cambiar o cancelar una cita desde ahí.
+
+**¿Puede gestionar más de un local o servicio?**
+Sí, cada línea de negocio se configura con sus propios servicios, disponibilidad y calendario.
+
+**¿Se graban las llamadas?**
+No, las llamadas no se graban. Para atenderlas, la conversación se procesa en tiempo real con proveedores de telefonía y de voz con IA.
+
+## Enlaces
+
+- Reservar una demo de 15 minutos: https://cal.eu/jmsolutions-mng6gi/noah-calendar
+- Términos de servicio: https://jm20aisolutions.com/terminos-de-servicio (EN: https://jm20aisolutions.com/terms-of-service)
+- Política de privacidad: https://jm20aisolutions.com/politica-de-privacidad (EN: https://jm20aisolutions.com/privacy-policy)

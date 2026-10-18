@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noah.jm20aisolutions.com/sitemap.xml
