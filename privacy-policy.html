@@ -15,9 +15,9 @@
 <meta property="og:description" content="JM20 AI Solutions privacy policy: who we are, what data we collect, how we use it, where it is stored, your GDPR rights and cookies."/>
 <meta property="og:url" content="https://jm20aisolutions.com/privacy-policy"/>
 <meta property="og:image" content="https://noah.jm20aisolutions.com/og-image.png"/>
-<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png"/>
-<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<link rel="stylesheet" href="/legal.css"/>
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="stylesheet" href="legal.css"/>
 <style id="jm20-consent-css">#jm20-consent{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:3000;max-width:760px;margin:0 auto;background:#1d1d1f;color:#f5f5f7;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px 20px;box-shadow:0 16px 48px rgba(0,0,0,.6);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}#jm20-consent strong{display:block;font-size:15px;margin-bottom:4px}#jm20-consent p{margin:0 0 12px;color:#d2d2d7}#jm20-consent .jm-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}#jm20-consent button{font:500 14px system-ui,sans-serif;min-height:40px;padding:0 20px;border-radius:9999px;cursor:pointer;color:#fff}#jm20-consent .jm-accept{background:#0066cc;border:1px solid #0066cc}#jm20-consent .jm-reject{background:transparent;border:1px solid rgba(255,255,255,.55)}#jm20-consent .jm-more{background:none;border:none;text-decoration:underline;padding:0 4px;margin-left:auto;color:#d2d2d7}</style>
 <script>
   /* Consent-gated analytics.
@@ -87,7 +87,7 @@
       banner.innerHTML = '<strong id="jm20-consent-title" data-k="title"></strong><p id="jm20-consent-body" data-k="body"></p><div class="jm-row"><button type="button" class="jm-reject" data-k="reject"></button><button type="button" class="jm-accept" data-k="accept"></button><button type="button" class="jm-more" data-k="more"></button></div>';
       banner.querySelector('[data-k=accept]').addEventListener('click', function () { decide('granted'); });
       banner.querySelector('[data-k=reject]').addEventListener('click', function () { decide('denied'); });
-      banner.querySelector('[data-k=more]').addEventListener('click', function () { window.location.href = (lang() === 'es' ? '/politica-de-privacidad' : '/privacy-policy'); });
+      banner.querySelector('[data-k=more]').addEventListener('click', function () { window.location.href = (lang() === 'es' ? 'politica-de-privacidad' : 'privacy-policy'); });
       banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') decide('denied'); });
       document.body.appendChild(banner);
       paint();
@@ -104,15 +104,15 @@
 <header class="site-header">
 <nav class="nav">
   <div class="nav-inner">
-    <a class="logo" href="/"><span class="logo-dot"></span>Noah<span class="logo-by"><span>by</span><img class="jm20-logo" src="/jm20-logo.png" alt="JM20"/></span></a>
+    <a class="logo" href="./"><span class="logo-dot"></span>Noah<span class="logo-by"><span>by</span><img class="jm20-logo" src="jm20-logo.png" alt="JM20"/></span></a>
     <div class="nav-links">
-      <a class="nav-link" href="/#how">How it works</a>
-      <a class="nav-link" href="/#demo">Demo</a>
-      <a class="nav-link" href="/#pricing">Pricing</a>
-      <a class="nav-link" href="/#faq">FAQ</a>
+      <a class="nav-link" href="./#how">How it works</a>
+      <a class="nav-link" href="./#demo">Demo</a>
+      <a class="nav-link" href="./#pricing">Pricing</a>
+      <a class="nav-link" href="./#faq">FAQ</a>
       <div class="lang-toggle" role="group" aria-label="Language">
-        <a class="lang-btn" href="/politica-de-privacidad" lang="es" hreflang="es">ES</a>
-        <a class="lang-btn active" href="/privacy-policy" lang="en" hreflang="en" aria-current="page">EN</a>
+        <a class="lang-btn" href="politica-de-privacidad" lang="es" hreflang="es">ES</a>
+        <a class="lang-btn active" href="privacy-policy" lang="en" hreflang="en" aria-current="page">EN</a>
       </div>
       <a class="btn-primary btn-sm" href="https://cal.eu/jmsolutions-mng6gi/noah-calendar" target="_blank" rel="noopener">Book a demo</a>
     </div>
@@ -121,7 +121,7 @@
 </header>
 <main id="main" tabindex="-1">
   <article class="legal">
-    <a class="back" href="/">← Back to Noah</a>
+    <a class="back" href="./">← Back to Noah</a>
     <p class="eyebrow">LEGAL</p>
     <h1>Privacy Policy</h1>
     <p class="meta">Last updated: January 2026 · Governed by Spanish and EU law</p>
@@ -155,17 +155,17 @@
         <p>For any privacy-related questions, contact: privacy@jm20.eu · JM20 AI Solutions · Spain · EU</p>
       </section>
     </div>
-    <p class="see">See also: <a href="/terms-of-service">Terms of service</a></p>
+    <p class="see">See also: <a href="terms-of-service">Terms of service</a></p>
   </article>
 </main>
 <footer>
-  <img class="footer-logo" src="/jm20-logo.png" alt="JM20 AI Solutions"/>
+  <img class="footer-logo" src="jm20-logo.png" alt="JM20 AI Solutions"/>
   <p>Noah is a product of JM20 AI Solutions · Voice bookings, done right.</p>
   <p>© 2026 JM20 AI Solutions. All rights reserved.</p>
   <nav class="footer-links" aria-label="Footer links">
     <a href="https://jm20aisolutions.com/">JM20 AI Solutions website</a>
-    <a href="/terms-of-service">Terms of service</a>
-    <a href="/privacy-policy">Privacy policy</a>
+    <a href="terms-of-service">Terms of service</a>
+    <a href="privacy-policy">Privacy policy</a>
     <button type="button" id="cookie-settings">Cookie settings</button>
   </nav>
 </footer>
