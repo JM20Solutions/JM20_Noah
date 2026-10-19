@@ -43,5 +43,5 @@ No, las llamadas no se graban. Para atenderlas, la conversación se procesa en t
 ## Enlaces
 
 - Reservar una demo de 15 minutos: https://cal.eu/jmsolutions-mng6gi/noah-calendar
-- Términos de servicio: https://jm20aisolutions.com/terminos-de-servicio (EN: https://jm20aisolutions.com/terms-of-service)
-- Política de privacidad: https://jm20aisolutions.com/politica-de-privacidad (EN: https://jm20aisolutions.com/privacy-policy)
+- Términos de servicio: https://noah.jm20aisolutions.com/terminos-de-servicio (EN: https://noah.jm20aisolutions.com/terms-of-service)
+- Política de privacidad: https://noah.jm20aisolutions.com/politica-de-privacidad (EN: https://noah.jm20aisolutions.com/privacy-policy)

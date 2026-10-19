@@ -96,7 +96,7 @@
       banner.innerHTML = '<strong id="jm20-consent-title" data-k="title"></strong><p id="jm20-consent-body" data-k="body"></p><div class="jm-row"><button type="button" class="jm-reject" data-k="reject"></button><button type="button" class="jm-accept" data-k="accept"></button><button type="button" class="jm-more" data-k="more"></button></div>';
       banner.querySelector('[data-k=accept]').addEventListener('click', function () { decide('granted'); });
       banner.querySelector('[data-k=reject]').addEventListener('click', function () { decide('denied'); });
-      banner.querySelector('[data-k=more]').addEventListener('click', function () { window.location.href = (lang() === 'es' ? 'https://jm20aisolutions.com/politica-de-privacidad' : 'https://jm20aisolutions.com/privacy-policy'); });
+      banner.querySelector('[data-k=more]').addEventListener('click', function () { window.location.href = (lang() === 'es' ? '/politica-de-privacidad' : '/privacy-policy'); });
       banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') decide('denied'); });
       document.body.appendChild(banner);
       paint();
@@ -902,8 +902,8 @@ main:focus{outline:none}
   <p data-i18n="footerCopy">© 2026 JM20 AI Solutions. Todos los derechos reservados.</p>
   <nav class="footer-links" data-i18n="footNavLabel" data-i18n-attr="aria-label" aria-label="Enlaces del pie de página">
     <a href="https://jm20aisolutions.com/" data-i18n="footMain">Web de JM20 AI Solutions</a>
-    <a href="https://jm20aisolutions.com/terminos-de-servicio" data-href-es="https://jm20aisolutions.com/terminos-de-servicio" data-href-en="https://jm20aisolutions.com/terms-of-service" data-i18n="footLegal">Términos de servicio</a>
-    <a href="https://jm20aisolutions.com/politica-de-privacidad" data-href-es="https://jm20aisolutions.com/politica-de-privacidad" data-href-en="https://jm20aisolutions.com/privacy-policy" data-i18n="footPrivacy">Política de privacidad</a>
+    <a href="/terminos-de-servicio" data-href-es="/terminos-de-servicio" data-href-en="/terms-of-service" data-i18n="footLegal">Términos de servicio</a>
+    <a href="/politica-de-privacidad" data-href-es="/politica-de-privacidad" data-href-en="/privacy-policy" data-i18n="footPrivacy">Política de privacidad</a>
     <button type="button" id="cookie-settings" data-i18n="footCookies">Configuración de cookies</button>
   </nav>
 </footer>
