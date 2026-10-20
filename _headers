@@ -8,6 +8,8 @@
 
 /
   Cache-Control: public, max-age=0, must-revalidate
+  Link: </llms.txt>; rel="describedby"
+  Link: </.well-known/agent-skills/index.json>; rel="describedby"
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
