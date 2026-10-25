@@ -2,7 +2,7 @@
 
 > Noah es la recepcionista de IA para barberías, peluquerías y salones. Contesta las llamadas que no puedes atender, consulta tu disponibilidad real y reserva, cambia o cancela la cita al momento.
 
-Noah es un producto de JM20 AI Solutions (https://jm20aisolutions.com/). Idiomas de la web: español e inglés.
+Noah es un producto de [JM20 AI Solutions](https://jm20aisolutions.com/). Idiomas de la web: español e inglés.
 
 ## Cómo funciona
 
@@ -42,6 +42,10 @@ No, las llamadas no se graban. Para atenderlas, la conversación se procesa en t
 
 ## Enlaces
 
-- Reservar una demo de 15 minutos: https://cal.eu/jmsolutions-mng6gi/noah-calendar
-- Términos de servicio: https://noah.jm20aisolutions.com/terminos-de-servicio (EN: https://noah.jm20aisolutions.com/terms-of-service)
-- Política de privacidad: https://noah.jm20aisolutions.com/politica-de-privacidad (EN: https://noah.jm20aisolutions.com/privacy-policy)
+- [Web de Noah](https://noah.jm20aisolutions.com/)
+
+- [Reservar una demo de 15 minutos](https://cal.eu/jmsolutions-mng6gi/noah-calendar)
+
+- [Términos de servicio](https://noah.jm20aisolutions.com/terminos-de-servicio) · [English](https://noah.jm20aisolutions.com/terms-of-service)
+
+- [Política de privacidad](https://noah.jm20aisolutions.com/politica-de-privacidad) · [English](https://noah.jm20aisolutions.com/privacy-policy)
