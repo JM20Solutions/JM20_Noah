@@ -60,23 +60,23 @@
       '<div class="nf-view-form">' +
         '<h2 id="nf-title">' + t.title + '</h2>' +
         '<p class="nf-sub">' + t.sub + '</p>' +
-        '<form id="nf-form" novalidate toolname="reservar_demo_noah" tooldescription="' + t.tool + '">' +
+        '<form id="nf-form" novalidate>' +
           '<div class="nf-field"><label for="nf-name">' + t.name + ' *</label>' +
-            '<input id="nf-name" name="full_name" type="text" required maxlength="120" autocomplete="name" toolparamdescription="' + t.pName + '"></div>' +
+            '<input id="nf-name" name="full_name" type="text" required maxlength="120" autocomplete="name"></div>' +
           '<div class="nf-field"><label for="nf-business">' + t.business + ' *</label>' +
-            '<input id="nf-business" name="business_name" type="text" required maxlength="160" autocomplete="organization" toolparamdescription="' + t.pBusiness + '"></div>' +
+            '<input id="nf-business" name="business_name" type="text" required maxlength="160" autocomplete="organization"></div>' +
           '<div class="nf-field"><label for="nf-phone">' + t.phone + ' *</label>' +
-            '<input id="nf-phone" name="phone" type="tel" required minlength="5" maxlength="30" autocomplete="tel" placeholder="+34 600 000 000" toolparamdescription="' + t.pPhone + '"></div>' +
+            '<input id="nf-phone" name="phone" type="tel" required minlength="5" maxlength="30" autocomplete="tel" placeholder="+34 600 000 000"></div>' +
           '<div class="nf-field"><label for="nf-email">' + t.email + ' *</label>' +
-            '<input id="nf-email" name="email" type="email" required maxlength="254" autocomplete="email" toolparamdescription="' + t.pEmail + '"></div>' +
+            '<input id="nf-email" name="email" type="email" required maxlength="254" autocomplete="email"></div>' +
           '<div class="nf-field"><span class="nf-legend">' + t.where + '</span><div class="nf-radios">' +
-            '<label><input type="radio" name="meeting_type" value="google_meet" checked toolparamdescription="' + t.pWhere + '"> ' + t.meet + '</label>' +
-            '<label><input type="radio" name="meeting_type" value="en_mi_negocio" toolparamdescription="' + t.pWhere + '"> ' + t.onsite + '</label>' +
+            '<label><input type="radio" name="meeting_type" value="google_meet" checked> ' + t.meet + '</label>' +
+            '<label><input type="radio" name="meeting_type" value="en_mi_negocio"> ' + t.onsite + '</label>' +
           '</div></div>' +
           '<div class="nf-field"><label for="nf-comments">' + t.comments + '</label>' +
-            '<textarea id="nf-comments" name="comments" maxlength="2000" placeholder="' + t.commentsPh + '" toolparamdescription="' + t.pComments + '"></textarea></div>' +
+            '<textarea id="nf-comments" name="comments" maxlength="2000" placeholder="' + t.commentsPh + '"></textarea></div>' +
           '<div class="nf-hp" aria-hidden="true"><label for="nf-website">Website</label>' +
-            '<input id="nf-website" name="website" type="text" tabindex="-1" autocomplete="off" toolparamdescription="' + t.pHp + '"></div>' +
+            '<input id="nf-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
           '<p class="nf-legal">' + t.legalA + '<a href="' + t.legalHref + '" target="_blank" rel="noopener">' + t.legalLink + '</a>' + t.legalB + '</p>' +
           '<div class="nf-error" role="alert">' + t.err + '</div>' +
           '<button type="submit" class="btn-primary nf-submit">' + t.submit + '</button>' +
@@ -169,6 +169,52 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
+  /* WebMCP (Chrome): lets a browser AI agent call "reservar_demo_noah".
+     It opens the visible form and pre-fills it; the PERSON reviews and presses Send.
+     Browsers without WebMCP skip this silently. */
+  function registerAgentTool() {
+    try {
+      var mc = document.modelContext;
+      if (!mc || typeof mc.registerTool !== 'function') return;
+      var es = TX.es;
+      Promise.resolve(mc.registerTool({
+        name: 'reservar_demo_noah',
+        description: es.tool + ' | ' + TX.en.tool + ' The person must review the pre-filled form and press the send button themselves.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            full_name: { type: 'string', description: es.pName },
+            business_name: { type: 'string', description: es.pBusiness },
+            phone: { type: 'string', description: es.pPhone },
+            email: { type: 'string', description: es.pEmail },
+            meeting_type: { type: 'string', enum: ['google_meet', 'en_mi_negocio'], description: es.pWhere },
+            comments: { type: 'string', description: es.pComments },
+            plan: { type: 'string', description: 'Optional plan of interest: Starter, Pro, Anual or Pay As You Go' }
+          },
+          required: ['full_name', 'business_name', 'phone', 'email']
+        },
+        annotations: { readOnlyHint: false },
+        execute: function (a) {
+          a = a || {};
+          open(String(a.plan || '').slice(0, 60), null);
+          var f = card.querySelector('#nf-form');
+          if (!f) return 'The form could not be opened.';
+          var set = function (n, v) { if (v != null && f.elements[n]) f.elements[n].value = String(v); };
+          set('full_name', a.full_name); set('business_name', a.business_name);
+          set('phone', a.phone); set('email', a.email); set('comments', a.comments);
+          if (a.meeting_type === 'google_meet' || a.meeting_type === 'en_mi_negocio') {
+            Array.prototype.forEach.call(f.querySelectorAll('input[name="meeting_type"]'), function (r) {
+              r.checked = (r.value === a.meeting_type);
+            });
+          }
+          return f.checkValidity()
+            ? 'The demo request form is open and pre-filled. The person must review it and press "Enviar solicitud"; they will then receive an email with a link to pick a day and time.'
+            : 'The form is open but some fields are missing or invalid (check phone and email). The person must correct them and press "Enviar solicitud".';
+        }
+      })).catch(function () {});
+    } catch (e) {}
+  }
+
   function init() {
     overlay = document.createElement('div');
     overlay.className = 'nf-overlay';
@@ -180,6 +226,7 @@
     overlay.appendChild(card);
     document.body.appendChild(overlay);
     render(getLang());
+    registerAgentTool();
 
     overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) close(); });
     document.addEventListener('keydown', function (e) {
