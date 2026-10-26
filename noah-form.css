@@ -1,0 +1,29 @@
+/* Noah demo-request modal — uses the site's own design tokens */
+html.nf-lock{overflow:hidden}
+.nf-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55)}
+.nf-overlay.nf-open{display:flex}
+.nf-card{position:relative;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;background:var(--canvas,#fff);color:var(--ink,#1d1d1f);border-radius:18px;padding:28px 28px 24px;box-shadow:var(--product-shadow,0 8px 40px rgba(0,0,0,.3))}
+.nf-close{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;background:transparent;font-size:26px;line-height:1;cursor:pointer;color:var(--ink-48,#6e6e73);border-radius:50%}
+.nf-close:hover{background:var(--parchment,#f5f5f7)}
+.nf-card h2{font-size:24px;line-height:1.2;margin:0 28px 6px 0;letter-spacing:-.28px}
+.nf-sub{font-size:15px;line-height:1.45;color:var(--ink-48,#6e6e73);margin-bottom:18px}
+.nf-field{margin-bottom:14px}
+.nf-field label,.nf-legend{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-80,#333)}
+.nf-field input[type=text],.nf-field input[type=email],.nf-field input[type=tel],.nf-field textarea{width:100%;font:400 16px/1.4 var(--font,system-ui,sans-serif);letter-spacing:-.2px;color:var(--ink,#1d1d1f);background:#fff;border:1px solid var(--hairline,#e0e0e0);border-radius:12px;padding:11px 14px}
+.nf-field textarea{min-height:84px;resize:vertical}
+.nf-field input:focus,.nf-field textarea:focus{outline:2px solid var(--primary-focus,#0071e3);outline-offset:1px;border-color:transparent}
+.nf-radios{display:flex;flex-wrap:wrap;gap:8px 20px}
+.nf-radios label{display:flex;align-items:center;gap:8px;font-weight:400;font-size:15px;margin:0;cursor:pointer}
+.nf-radios input{width:18px;height:18px;accent-color:var(--primary,#0066cc)}
+.nf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.nf-legal{font-size:12px;line-height:1.45;color:var(--ink-48,#6e6e73);margin:4px 0 14px}
+.nf-legal a{text-decoration:underline}
+.nf-submit{width:100%;cursor:pointer;border:0}
+.nf-submit[disabled]{opacity:.6;cursor:default}
+.nf-error{display:none;margin-bottom:12px;padding:10px 12px;border-radius:10px;background:#fff1f0;color:#b42318;font-size:14px}
+.nf-error.nf-show{display:block}
+.nf-done{text-align:center;padding:12px 0 4px}
+.nf-done .nf-tick{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--primary,#0066cc);background:rgba(0,102,204,.1);border:2px solid var(--primary,#0066cc)}
+.nf-done h2{margin:0 0 8px}
+.nf-done .nf-sub{margin-bottom:20px}
+@media (max-width:520px){.nf-card{padding:24px 18px 20px}}
